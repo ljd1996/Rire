@@ -1,0 +1,11 @@
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rire?autoReconnect=true&useSSL=false&nullCatalogMeansCurrent=true&useUnicode=true&characterEncoding=UTF-8
+
+
