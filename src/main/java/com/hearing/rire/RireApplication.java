@@ -22,14 +22,13 @@ public class RireApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(RireApplication.class, args);
-//        genBean();
     }
 
     private static void genBean() throws IOException, XMLParserException,
             InvalidConfigurationException, SQLException, InterruptedException {
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;
-        File configFile = new File("/home/hearing/WorkSpace/SpringBoot/rire/src/main/resources/mybatis.xml");
+        File configFile = new File("/home/hearing/WorkSpace/SpringBoot/Rire/src/main/resources/mybatis.xml");
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
