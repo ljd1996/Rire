@@ -1,16 +1,26 @@
 package com.hearing.rire.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Create by hearing on 19-4-8
  */
-@RestController
+@Controller
 public class HttpController {
 
     @GetMapping("/")
     public String index() {
-        return "rire";
+        return "index";
+    }
+
+    @GetMapping("/home")
+    public String home() {
+        return "index";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 }

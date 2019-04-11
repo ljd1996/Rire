@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()    // 禁用 Spring Security 自带的跨域处理,不然loginProcessingUrl配置失效
                 .authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
-                .antMatchers("/auth").authenticated()
+//                .antMatchers("/auth").authenticated()
 //                .antMatchers("/admin").hasAuthority("role1")
                 .anyRequest().authenticated()
                 .and()
