@@ -40,15 +40,28 @@
 
     <script type="text/javascript">
         $(function () {
-            var user;
-            var isLogin = false;
             $.ajax({
-                url: "current_user",
+                url: "current_user?page=index",
                 type: "GET",
                 success: function (result) {
-                    if (result != null) {
-                        user = result;
-                        isLogin = true;
+                    if (result.name != null) {
+                        $('#account_item_login').hide();
+                        $('#account_item_logined').show().text(result.name);
+                        $('#account_item_release').show();
+                        $('#account_item_sell').show();
+                        $('#account_item_buy').show();
+                        $('#account_item_order').show();
+                        $('#account_item_contract').show();
+                        $('#account_item_logout').show();
+                    } else {
+                        $('#account_item_login').show();
+                        $('#account_item_logined').hide();
+                        $('#account_item_release').hide();
+                        $('#account_item_sell').hide();
+                        $('#account_item_buy').hide();
+                        $('#account_item_order').hide();
+                        $('#account_item_contract').hide();
+                        $('#account_item_logout').hide();
                     }
                 }
             });
@@ -87,7 +100,28 @@
                                 <li><a href="#">账户</a>
                                     <ul>
                                         <li>
-                                            <a href="login">Login</a>
+                                            <a href="login" id="account_item_login">登录</a>
+                                        </li>
+                                        <li>
+                                            <a href="myself" id="account_item_logined">已登录</a>
+                                        </li>
+                                        <li>
+                                            <a href="release" id="account_item_release">发布</a>
+                                        </li>
+                                        <li>
+                                            <a href="my_sell" id="account_item_sell">我的卖出</a>
+                                        </li>
+                                        <li>
+                                            <a href="my_buy" id="account_item_buy">我的买到</a>
+                                        </li>
+                                        <li>
+                                            <a href="my_order" id="account_item_order">我的订单</a>
+                                        </li>
+                                        <li>
+                                            <a href="my_contract" id="account_item_contract">我的合同</a>
+                                        </li>
+                                        <li>
+                                            <a href="logout" id="account_item_logout">退出登录</a>
                                         </li>
                                     </ul>
                                 </li>

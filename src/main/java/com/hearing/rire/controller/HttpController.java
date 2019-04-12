@@ -48,12 +48,4 @@ public class HttpController {
         userServices.register(user);
         return "index";
     }
-
-    @GetMapping("/current_user")
-    public String getUser(Map<String, Object> map, @RequestParam("page") String page) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        map.put("user", principal instanceof UserDetails ? (User) principal : null);
-        System.out.println(principal);
-        return "index";
-    }
 }
