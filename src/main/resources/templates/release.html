@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Home</title>
+    <title>Contact</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon -->
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{img/favicon.ico}">
-    <link rel="apple-touch-icon" th:href="@{apple-touch-icon.png}">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
     <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/animate.css}">
@@ -69,8 +69,8 @@
 
     </script>
 </head>
-
 <body>
+
 <header>
     <div id="sticky-menu" class="header-bottom">
         <div class="container">
@@ -140,6 +140,76 @@
 
 <div class="page-banner">
     <img src="img/slider/bg3.jpg" alt="Page Banner"/>
+</div>
+
+
+<div class="contact-informaion section-padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="contact-form clearfix">
+                        <form action="#" method="post">
+                            <div class="col-sm-6">
+                                <div class="input-text">
+                                    <input type="text" name="name" placeholder="商品名称"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <select name="type" id="selecte" class="shortselect">
+                                    <option value="0" selected="selected">商品</option>
+                                    <option value="1">需求</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="input-text">
+                                    <input type="text" name="pro_type" placeholder="商品类型"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-text">
+                                    <input type="text" name="price" placeholder="商品价格"/>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-box">
+                                <img th:src="@{images/6.jpg}" class="img-responsive" alt="">
+                                <div class="portfolio-box-caption">
+                                    <div class="portfolio-box-caption-content">
+                                        <div id="uploadForm1" style="height:100px;display:none;background: #4A4C4E;">
+                                            <form action="/upload" enctype="multipart/form-data" method="post">
+                                                <input type="hidden" name="category" value="picture">
+                                                <input id="uploadPicture" type="file"
+                                                       accept="image/*" name="file"
+                                                       style="display: none;"/>
+                                                <input type="button" id="uploadPictureButton" value="上传图片"
+                                                       style="height: 36px;width: 120px;margin-top: 10px;background: #1a1c1e">
+                                                <br>
+                                                <input style="height: 36px;width: 50px;margin-top: 10px;background: #1a1c1e" type="submit" value="上传">
+                                            </form>
+                                        </div>
+                                        <div id="uploadLink1" style="cursor:pointer;color: #2e6da4;">上传图片</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div class="input-text">
+                                    <textarea name="description" placeholder="描述" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="submit-text">
+                                    <input type="submit" name="submit" value="发布"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <footer>

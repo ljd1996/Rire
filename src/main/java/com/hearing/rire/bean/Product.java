@@ -17,6 +17,8 @@ public class Product {
 
     private Integer userId;
 
+    private Float price;
+
     public Integer getId() {
         return id;
     }
@@ -79,5 +81,13 @@ public class Product {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

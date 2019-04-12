@@ -3,15 +3,11 @@ package com.hearing.rire.controller;
 import com.hearing.rire.bean.User;
 import com.hearing.rire.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Map;
 
 /**
  * Create by hearing on 19-4-8
@@ -47,5 +43,10 @@ public class HttpController {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userServices.register(user);
         return "index";
+    }
+
+    @GetMapping("/release")
+    public String release() {
+        return "release";
     }
 }

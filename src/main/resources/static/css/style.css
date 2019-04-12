@@ -70,6 +70,7 @@ button:focus,a:focus {
 .shortselect{
     background:#fafdfe;
     margin-top:6px;
+    margin-bottom:6px;
     height:38px;
     width:200px;
     align-content: center;

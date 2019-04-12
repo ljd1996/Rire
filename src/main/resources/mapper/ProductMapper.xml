@@ -10,6 +10,7 @@
     <result column="image" jdbcType="VARCHAR" property="image" />
     <result column="time" jdbcType="INTEGER" property="time" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="price" jdbcType="REAL" property="price" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, pro_type, type, description, image, time, user_id
+    id, name, pro_type, type, description, image, time, user_id, price
   </sql>
   <select id="selectByExample" parameterType="com.hearing.rire.bean.ProductExample" resultMap="BaseResultMap">
     select
@@ -105,10 +106,10 @@
   <insert id="insert" parameterType="com.hearing.rire.bean.Product">
     insert into product (id, name, pro_type, 
       type, description, image, 
-      time, user_id)
+      time, user_id, price)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{proType,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
-      #{time,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
+      #{time,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{price,jdbcType=REAL})
   </insert>
   <insert id="insertSelective" parameterType="com.hearing.rire.bean.Product">
     insert into product
@@ -137,6 +138,9 @@
       <if test="userId != null">
         user_id,
       </if>
+      <if test="price != null">
+        price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -162,6 +166,9 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=REAL},
       </if>
     </trim>
   </insert>
@@ -198,6 +205,9 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=REAL},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -212,7 +222,8 @@
       description = #{record.description,jdbcType=VARCHAR},
       image = #{record.image,jdbcType=VARCHAR},
       time = #{record.time,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER}
+      user_id = #{record.userId,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=REAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +252,9 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
       </if>
+      <if test="price != null">
+        price = #{price,jdbcType=REAL},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -252,7 +266,8 @@
       description = #{description,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
       time = #{time,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER}
+      user_id = #{userId,jdbcType=INTEGER},
+      price = #{price,jdbcType=REAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
