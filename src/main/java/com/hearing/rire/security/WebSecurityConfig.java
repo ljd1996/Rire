@@ -16,30 +16,28 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
+    private UserService userService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()    // 禁用 Spring Security 自带的跨域处理,不然loginProcessingUrl配置失效
                 .authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
-//                .antMatchers("/auth").authenticated()
-//                .antMatchers("/admin").hasAuthority("role1")
-                .anyRequest().authenticated()
+                .antMatchers("/", "/index").permitAll()
+                .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login").loginProcessingUrl("/loginConfirm")
                 .usernameParameter("name").passwordParameter("password")
-                .defaultSuccessUrl("/home").successHandler(loginSuccessHandler)
+                .defaultSuccessUrl("/index")
                 .permitAll()
                 .and()
-                .logout().clearAuthentication(true).invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/home")
+                .logout().clearAuthentication(true).invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/index")
                 .permitAll();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(new UserService()).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
     }
 }

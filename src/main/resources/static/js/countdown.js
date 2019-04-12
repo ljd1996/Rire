@@ -87,5 +87,5 @@ $("#countdown-1,#countdown-2").countdown({
 
 	function() {
 	// This will run when the countdown ends
-	alert("Happy New Year!");
+	// alert("Happy New Year!");
 });

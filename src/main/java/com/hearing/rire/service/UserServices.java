@@ -23,19 +23,11 @@ public class UserServices {
         UserExample.Criteria criteria = userExample.createCriteria();
         criteria.andNameEqualTo(name);
         List<User> users = userMapper.selectByExample(userExample);
-        if (users.size() > 0) {
-            return users.get(0);
-        } else {
-            return null;
-        }
+        return users.size() > 0 ? users.get(0) : null;
     }
 
     public Msg register(User user) {
-        if (userMapper.insert(user) >= 0) {
-            return Msg.response(Msg.CODE_SUCCESS);
-        } else {
-            return Msg.response(Msg.CODE_FAIL);
-        }
+        return Msg.response(userMapper.insert(user) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
     public Msg login(String name, String password) {
