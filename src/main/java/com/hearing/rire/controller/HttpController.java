@@ -9,7 +9,6 @@ import com.hearing.rire.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,8 +50,8 @@ public class HttpController {
 
     @GetMapping("/product")
     public String product(Map<String, List<Product>> map,
-                          @RequestParam("type") String type) {
-        switch (type) {
+                          @RequestParam("type") Integer type, @RequestParam("proType") String proType) {
+        switch (proType) {
             case Constant.TYPE_GOODS:
                 map.put("product", productServices.getAllGoods());
                 break;
@@ -64,6 +63,9 @@ public class HttpController {
                 break;
             case Constant.TYPE_MY_Demand:
                 map.put("product", productServices.getMyDemand(userServices.getCurrentUser().getId()));
+                break;
+            default:
+                map.put("product", type==0?productServices.getGoodsByType(proType):productServices.getDemandByType(proType));
                 break;
         }
         return "product";

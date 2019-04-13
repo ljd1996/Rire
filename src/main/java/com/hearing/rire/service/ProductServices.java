@@ -31,16 +31,25 @@ public class ProductServices {
         return productMapper.selectByExample(example);
     }
 
-    public List<Product> getProductByType(String proType) {
+    public List<Product> getGoodsByType(String proType) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
         criteria.andProTypeEqualTo(proType);
+        criteria.andTypeEqualTo(0);
         return productMapper.selectByExample(example);
     }
 
     public List<Product> getAllDemand() {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
+        criteria.andTypeEqualTo(1);
+        return productMapper.selectByExample(example);
+    }
+
+    public List<Product> getDemandByType(String proType) {
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+        criteria.andProTypeEqualTo(proType);
         criteria.andTypeEqualTo(1);
         return productMapper.selectByExample(example);
     }
