@@ -4,8 +4,9 @@ import com.hearing.rire.bean.Product;
 import com.hearing.rire.bean.User;
 import com.hearing.rire.service.ProductServices;
 import com.hearing.rire.service.UserServices;
+import com.hearing.rire.util.Constant;
+import com.hearing.rire.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ClassUtils;
@@ -14,10 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -47,9 +49,29 @@ public class HttpController {
         return "login";
     }
 
-    @GetMapping("/product1")
-    public String product1() {
-        return "product1";
+    @GetMapping("/product")
+    public String product(Map<String, List<Product>> map,
+                          @RequestParam("type") String type) {
+        switch (type) {
+            case Constant.TYPE_GOODS:
+                map.put("product", productServices.getAllGoods());
+                break;
+            case Constant.TYPE_DEMAND:
+                map.put("product", productServices.getAllDemand());
+                break;
+            case Constant.TYPE_MY_GOODS:
+                map.put("product", productServices.getMyGoods(userServices.getCurrentUser().getId()));
+                break;
+            case Constant.TYPE_MY_Demand:
+                map.put("product", productServices.getMyDemand(userServices.getCurrentUser().getId()));
+                break;
+        }
+        return "product";
+    }
+
+    @GetMapping("/product-details")
+    public String productDetails() {
+        return "product-details";
     }
 
     @PostMapping("/register")
@@ -73,7 +95,7 @@ public class HttpController {
             String subffix = name.substring(name.lastIndexOf("."), name.length());
             long time = new Date().getTime();
             String fileName = preffix + new SimpleDateFormat("yyyyMMddHHmmss").format(time) + subffix;
-            String filepath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/file/";
+            String filepath = Utils.getResPath();
 
             File f = new File(filepath);
             if (!f.exists()) {

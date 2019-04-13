@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>发布</title>
+    <title>Product</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{img/favicon.ico}">
+    <link rel="apple-touch-icon" th:href="@{apple-touch-icon.png}">
 
     <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/animate.css}">
@@ -64,20 +64,6 @@
                         $('#account_item_logout').hide();
                     }
                 }
-            });
-
-            $('#chooseImage').on('change', function () {
-                var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
-                    fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
-                    src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
-
-                // 检查是否是图片
-                if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
-                    error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
-                    return;
-                }
-
-                $('#cropedBigImg').attr('src', src);
             });
         });
 
@@ -156,60 +142,80 @@
     <img src="img/slider/bg3.jpg" alt="Page Banner"/>
 </div>
 
-
-<div class="contact-informaion section-padding-top">
+<section class="product-content section-padding">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
-                <div class="row">
-                    <div class="contact-form clearfix">
-                        <form action="/releaseAction" enctype="multipart/form-data" method="post">
-                            <div class="col-sm-6">
-                                <div class="input-text">
-                                    <input type="text" name="name" placeholder="商品名称"/>
+            <div class="tab-content">
+                <div class="tab-pane fade in active text-center" id="grid">
+                    <div class="single-products" th:each="item,itemStat : ${product}">
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="product-item margin40">
+                                <div class="pro-img">
+                                    <a href="product-details">
+                                        <img th:src="${'image/'+item.getImage().substring(item.getImage().lastIndexOf('/')+1)}"
+                                             alt="Product"/>
+                                    </a>
+                                    <div class="tag-n-s">
+                                        <span th:text="${item.getType()==0?'Goods':'Demand'}"></span>
+                                    </div>
+                                    <div class="actions-btn">
+                                        <ul class="clearfix">
+                                            <li>
+                                                <a href="#"><i class="fa fa-shopping-cart"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-heart"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#quick-view"><i
+                                                        class="fa fa-eye"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product-title">
+                                    <a href="product-details"><h5 th:text="${item.getName()}"></h5></a>
+                                    <span th:if="${item.getType()==0}" th:text="${' '+item.getProType()}"></span>
+                                    <p><span th:if="${item.getType()==0}" th:text="${item.getTime()}"></span></p>
+                                    <p><span th:if="${item.getType()==0}" th:text="${item.getPrice()+'RMB'}"></span></p>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <select name="type" id="selecte" class="shortselect">
-                                    <option value="0" selected="selected">商品</option>
-                                    <option value="1">需求</option>
-                                </select>
-                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                            <div class="col-sm-6">
-                                <div class="input-text">
-                                    <input type="text" name="proType" placeholder="商品类型"/>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="input-text">
-                                    <input type="text" name="price" placeholder="商品价格"/>
-                                </div>
-                            </div>
-
-                            <div class="col-xs-8">
-                                <div class="input-text">
-                                    <textarea name="description" placeholder="描述" rows="5"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-xs-4">
-                                <input type="file" id="chooseImage" name="file">
-                                <img id="cropedBigImg" alt="lorem ipsum dolor sit" data-address=''
-                                     title="自定义背景"/>
-                            </div>
-
-                            <div class="col-xs-12">
-                                <div class="submit-text">
-                                    <input type="submit" name="submit" value="发布"/>
-                                </div>
-                            </div>
-                        </form>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="shop-menu clearfix margin-close">
+                    <div class="right floatright text-center">
+                        <div class="pagnation-ul">
+                            <ul class="clearfix">
+                                <li>
+                                    <a href="#">1</a>
+                                </li>
+                                <li>
+                                    <a href="#">2</a>
+                                </li>
+                                <li>
+                                    <a href="#">3</a>
+                                </li>
+                                <li class="dot-dot">
+                                    <a href="#">.....</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-angle-right"></i></a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
 
 <footer>
     <div class="footer-logo-text padding-close">
@@ -219,6 +225,5 @@
         </div>
     </div>
 </footer>
-
 </body>
 </html>
