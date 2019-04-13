@@ -8,7 +8,7 @@
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="image" jdbcType="VARCHAR" property="image" />
-    <result column="time" jdbcType="INTEGER" property="time" />
+    <result column="time" jdbcType="BIGINT" property="time" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="price" jdbcType="REAL" property="price" />
   </resultMap>
@@ -109,7 +109,7 @@
       time, user_id, price)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{proType,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
-      #{time,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{price,jdbcType=REAL})
+      #{time,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{price,jdbcType=REAL})
   </insert>
   <insert id="insertSelective" parameterType="com.hearing.rire.bean.Product">
     insert into product
@@ -162,7 +162,7 @@
         #{image,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
-        #{time,jdbcType=INTEGER},
+        #{time,jdbcType=BIGINT},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
@@ -200,7 +200,7 @@
         image = #{record.image,jdbcType=VARCHAR},
       </if>
       <if test="record.time != null">
-        time = #{record.time,jdbcType=INTEGER},
+        time = #{record.time,jdbcType=BIGINT},
       </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
@@ -221,7 +221,7 @@
       type = #{record.type,jdbcType=INTEGER},
       description = #{record.description,jdbcType=VARCHAR},
       image = #{record.image,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=INTEGER},
+      time = #{record.time,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=INTEGER},
       price = #{record.price,jdbcType=REAL}
     <if test="_parameter != null">
@@ -247,7 +247,7 @@
         image = #{image,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
-        time = #{time,jdbcType=INTEGER},
+        time = #{time,jdbcType=BIGINT},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
@@ -265,7 +265,7 @@
       type = #{type,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
-      time = #{time,jdbcType=INTEGER},
+      time = #{time,jdbcType=BIGINT},
       user_id = #{userId,jdbcType=INTEGER},
       price = #{price,jdbcType=REAL}
     where id = #{id,jdbcType=INTEGER}

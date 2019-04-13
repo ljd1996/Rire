@@ -13,7 +13,7 @@ public class Product {
 
     private String image;
 
-    private Integer time;
+    private Long time;
 
     private Integer userId;
 
@@ -67,11 +67,11 @@ public class Product {
         this.image = image == null ? null : image.trim();
     }
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 

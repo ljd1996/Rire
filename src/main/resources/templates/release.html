@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Contact</title>
+    <title>发布</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon -->
@@ -64,6 +64,20 @@
                         $('#account_item_logout').hide();
                     }
                 }
+            });
+
+            $('#chooseImage').on('change', function () {
+                var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
+                    fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
+                    src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
+
+                // 检查是否是图片
+                if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
+                    error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
+                    return;
+                }
+
+                $('#cropedBigImg').attr('src', src);
             });
         });
 
@@ -149,7 +163,7 @@
             <div class="col-sm-12">
                 <div class="row">
                     <div class="contact-form clearfix">
-                        <form action="#" method="post">
+                        <form action="/releaseAction" enctype="multipart/form-data" method="post">
                             <div class="col-sm-6">
                                 <div class="input-text">
                                     <input type="text" name="name" placeholder="商品名称"/>
@@ -164,7 +178,7 @@
 
                             <div class="col-sm-6">
                                 <div class="input-text">
-                                    <input type="text" name="pro_type" placeholder="商品类型"/>
+                                    <input type="text" name="proType" placeholder="商品类型"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -173,32 +187,17 @@
                                 </div>
                             </div>
 
-                            <div class="portfolio-box">
-                                <img th:src="@{images/6.jpg}" class="img-responsive" alt="">
-                                <div class="portfolio-box-caption">
-                                    <div class="portfolio-box-caption-content">
-                                        <div id="uploadForm1" style="height:100px;display:none;background: #4A4C4E;">
-                                            <form action="/upload" enctype="multipart/form-data" method="post">
-                                                <input type="hidden" name="category" value="picture">
-                                                <input id="uploadPicture" type="file"
-                                                       accept="image/*" name="file"
-                                                       style="display: none;"/>
-                                                <input type="button" id="uploadPictureButton" value="上传图片"
-                                                       style="height: 36px;width: 120px;margin-top: 10px;background: #1a1c1e">
-                                                <br>
-                                                <input style="height: 36px;width: 50px;margin-top: 10px;background: #1a1c1e" type="submit" value="上传">
-                                            </form>
-                                        </div>
-                                        <div id="uploadLink1" style="cursor:pointer;color: #2e6da4;">上传图片</div>
-                                    </div>
+                            <div class="col-xs-8">
+                                <div class="input-text">
+                                    <textarea name="description" placeholder="描述" rows="5"></textarea>
                                 </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <input type="file" id="chooseImage" name="file">
+                                <img id="cropedBigImg" alt="lorem ipsum dolor sit" data-address=''
+                                     title="自定义背景"/>
                             </div>
 
-                            <div class="col-xs-12">
-                                <div class="input-text">
-                                    <textarea name="description" placeholder="描述" rows="4"></textarea>
-                                </div>
-                            </div>
                             <div class="col-xs-12">
                                 <div class="submit-text">
                                     <input type="submit" name="submit" value="发布"/>

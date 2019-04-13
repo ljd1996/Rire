@@ -5,6 +5,8 @@ import com.hearing.rire.bean.UserExample;
 import com.hearing.rire.dao.UserMapper;
 import com.hearing.rire.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,11 @@ public class UserServices {
 
     @Autowired
     private UserMapper userMapper;
+
+    public User getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return principal instanceof UserDetails ? (User) principal : null;
+    }
 
     public User getUserByName(String name) {
         UserExample userExample = new UserExample();

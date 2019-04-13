@@ -1,10 +1,15 @@
 package com.hearing.rire.controller;
 
 import com.hearing.rire.bean.User;
+import com.hearing.rire.service.UserServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -13,9 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JsonController {
 
+    @Autowired
+    private UserServices userServices;
+
     @GetMapping("/current_user")
     public User getUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return principal instanceof UserDetails ? (User) principal : null;
+        return userServices.getCurrentUser();
     }
+
 }
