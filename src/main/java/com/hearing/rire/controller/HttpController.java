@@ -7,6 +7,9 @@ import com.hearing.rire.service.UserServices;
 import com.hearing.rire.util.Constant;
 import com.hearing.rire.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,6 +53,12 @@ public class HttpController {
         return "login";
     }
 
+    @GetMapping("/myself")
+    public String myself(Map<String, User> map) {
+        map.put("user", userServices.getCurrentUser());
+        return "myself";
+    }
+
     @GetMapping("/product")
     public String product(Map<String, List<Product>> map,
                           @RequestParam("type") Integer type, @RequestParam("proType") String proType) {
@@ -74,6 +85,18 @@ public class HttpController {
     @GetMapping("/product-details")
     public String productDetails() {
         return "product-details";
+    }
+
+    @PostMapping("/updateUser")
+    public String updateUser(User user) {
+        if (user.getPassword().isEmpty()) {
+            user.setPassword(userServices.getCurrentUser().getPassword());
+        } else {
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        }
+        userServices.update(user);
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return "index";
     }
 
     @PostMapping("/register")

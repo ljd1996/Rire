@@ -33,6 +33,13 @@ public class UserServices {
         return users.size() > 0 ? users.get(0) : null;
     }
 
+    public Msg update(User user) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andIdEqualTo(getCurrentUser().getId());
+        return Msg.response(userMapper.updateByExampleSelective(user, userExample) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
+    }
+
     public Msg register(User user) {
         return Msg.response(userMapper.insert(user) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
