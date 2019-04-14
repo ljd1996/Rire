@@ -15,6 +15,8 @@ public class Order {
 
     private Integer proBuyerId;
 
+    private String location;
+
     public Integer getId() {
         return id;
     }
@@ -69,5 +71,13 @@ public class Order {
 
     public void setProBuyerId(Integer proBuyerId) {
         this.proBuyerId = proBuyerId;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location == null ? null : location.trim();
     }
 }

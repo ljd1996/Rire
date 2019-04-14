@@ -33,6 +33,10 @@ public class UserServices {
         return users.size() > 0 ? users.get(0) : null;
     }
 
+    public User getUserById(int id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+
     public Msg update(User user) {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();

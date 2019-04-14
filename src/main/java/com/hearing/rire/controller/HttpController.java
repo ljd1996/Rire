@@ -7,8 +7,6 @@ import com.hearing.rire.service.UserServices;
 import com.hearing.rire.util.Constant;
 import com.hearing.rire.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -76,15 +72,25 @@ public class HttpController {
                 map.put("product", productServices.getMyDemand(userServices.getCurrentUser().getId()));
                 break;
             default:
-                map.put("product", type==0?productServices.getGoodsByType(proType):productServices.getDemandByType(proType));
+                map.put("product", type == 0 ? productServices.getGoodsByType(proType) : productServices.getDemandByType(proType));
                 break;
         }
         return "product";
     }
 
-    @GetMapping("/product-details")
-    public String productDetails() {
-        return "product-details";
+    @GetMapping("/product_details")
+    public String productDetails(Map<String, Object> map, @RequestParam("productId") Integer productId) {
+        Product product = productServices.getProduct(productId);
+        map.put("product", product);
+        map.put("time", new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(product.getTime()));
+        User user = userServices.getCurrentUser();
+        boolean owner = false;
+        if (user != null && user.getId().equals(product.getUserId())) {
+            owner = true;
+        }
+        map.put("owner", owner);
+        map.put("user", userServices.getUserById(product.getUserId()).getName());
+        return "product_details";
     }
 
     @PostMapping("/updateUser")
@@ -130,6 +136,7 @@ public class HttpController {
             f.createNewFile();
             file.transferTo(f);
 
+            product.setStatus(Constant.PRO_STATUS_ON);
             product.setImage(filepath + fileName);
             product.setTime(time);
             product.setUserId(userServices.getCurrentUser().getId());

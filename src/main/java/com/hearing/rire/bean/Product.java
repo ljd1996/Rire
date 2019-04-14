@@ -19,6 +19,8 @@ public class Product {
 
     private Float price;
 
+    private Integer status;
+
     public Integer getId() {
         return id;
     }
@@ -89,5 +91,13 @@ public class Product {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

@@ -9,6 +9,7 @@
     <result column="user_buyer_id" jdbcType="INTEGER" property="userBuyerId" />
     <result column="pro_supplier_id" jdbcType="INTEGER" property="proSupplierId" />
     <result column="pro_buyer_id" jdbcType="INTEGER" property="proBuyerId" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +70,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, time, status, user_supplier_id, user_buyer_id, pro_supplier_id, pro_buyer_id
+    id, time, status, user_supplier_id, user_buyer_id, pro_supplier_id, pro_buyer_id, 
+    location
   </sql>
   <select id="selectByExample" parameterType="com.hearing.rire.bean.OrderExample" resultMap="BaseResultMap">
     select
@@ -104,10 +106,10 @@
   <insert id="insert" parameterType="com.hearing.rire.bean.Order">
     insert into order (id, time, status, 
       user_supplier_id, user_buyer_id, pro_supplier_id, 
-      pro_buyer_id)
+      pro_buyer_id, location)
     values (#{id,jdbcType=INTEGER}, #{time,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
       #{userSupplierId,jdbcType=INTEGER}, #{userBuyerId,jdbcType=INTEGER}, #{proSupplierId,jdbcType=INTEGER}, 
-      #{proBuyerId,jdbcType=INTEGER})
+      #{proBuyerId,jdbcType=INTEGER}, #{location,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hearing.rire.bean.Order">
     insert into order
@@ -133,6 +135,9 @@
       <if test="proBuyerId != null">
         pro_buyer_id,
       </if>
+      <if test="location != null">
+        location,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -155,6 +160,9 @@
       </if>
       <if test="proBuyerId != null">
         #{proBuyerId,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -188,6 +196,9 @@
       <if test="record.proBuyerId != null">
         pro_buyer_id = #{record.proBuyerId,jdbcType=INTEGER},
       </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +212,8 @@
       user_supplier_id = #{record.userSupplierId,jdbcType=INTEGER},
       user_buyer_id = #{record.userBuyerId,jdbcType=INTEGER},
       pro_supplier_id = #{record.proSupplierId,jdbcType=INTEGER},
-      pro_buyer_id = #{record.proBuyerId,jdbcType=INTEGER}
+      pro_buyer_id = #{record.proBuyerId,jdbcType=INTEGER},
+      location = #{record.location,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +239,9 @@
       <if test="proBuyerId != null">
         pro_buyer_id = #{proBuyerId,jdbcType=INTEGER},
       </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -237,7 +252,8 @@
       user_supplier_id = #{userSupplierId,jdbcType=INTEGER},
       user_buyer_id = #{userBuyerId,jdbcType=INTEGER},
       pro_supplier_id = #{proSupplierId,jdbcType=INTEGER},
-      pro_buyer_id = #{proBuyerId,jdbcType=INTEGER}
+      pro_buyer_id = #{proBuyerId,jdbcType=INTEGER},
+      location = #{location,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

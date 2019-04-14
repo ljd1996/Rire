@@ -36,7 +36,7 @@
         <!--指定要逆向分析哪些表-->
         <!--<table tableName="user" domainObjectName="User" />-->
         <table tableName="product" domainObjectName="Product" />
-        <!--<table tableName="order" domainObjectName="Order" />-->
+        <table tableName="order" domainObjectName="Order" />
         <!--<table tableName="contract" domainObjectName="Contract" />-->
 
     </context>
