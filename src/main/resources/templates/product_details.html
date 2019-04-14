@@ -65,12 +65,34 @@
                     }
                 }
             });
-
-            $('#btn_bid').on("click", function () {
-                alert($('#bid_select').select)
-            });
         });
 
+        function bid(mainid) {
+            var v = $('#bid_select').val();
+            if (v < 0) {
+                alert('未选择任何条目！')
+            } else {
+                $.ajax({
+                    url: "bid",
+                    type: "POST",
+                    data: "mainid=" + mainid + "&followid=" + v,
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+        function setStatus(id, status) {
+            $.ajax({
+                url: "set_status",
+                type: "GET",
+                data: "id=" + id + "&status=" + status,
+                success: function (result) {
+                    location.reload(true);
+                }
+            });
+        }
     </script>
 </head>
 
@@ -150,7 +172,7 @@
                                             <a href="myself" id="account_item_logined">已登录</a>
                                         </li>
                                         <li>
-                                            <a href="release" id="account_item_release">发布</a>
+                                            <a href="release?productId=-1" id="account_item_release">发布</a>
                                         </li>
                                         <li>
                                             <a href="product?type=0&proType=mygoods" id="account_item_sell">我的商品</a>
@@ -269,8 +291,8 @@
             </div>
 
             <div class="col-sm-12" style="margin-top: 18px;">
-                <div class="col-sm-4">
-                    <select name="goods" id="bid_select" class="shortselect">
+                <div class="col-sm-3">
+                    <select id="bid_select" class="shortselect">
                         <option value="-1"> -- 请选择 --</option>
                         <option th:each="item:${myGoods}"
                                 th:value="${item.getId()}"
@@ -278,22 +300,81 @@
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    <button id="btn_bid" class="btn btn-default btn-lg active" role="button">出价</button>
+                    <button th:if="${product.getType()==1&&product.getStatus()==0}"
+                            class="btn btn-default btn-lg active" role="button"
+                            th:onclick="'javascript:bid(\''+${product.getId()}+'\');'">出价
+                    </button>
                 </div>
                 <div class="col-sm-2">
-                    <button class="btn btn-default btn-lg active" role="button">下架</button>
+                    <button th:if="${product.getType()==0&&product.getStatus()==0}"
+                            class="btn btn-default btn-lg active" role="button">购买
+                    </button>
                 </div>
                 <div class="col-sm-2">
-                    <button class="btn btn-default btn-lg active" role="button">上架</button>
+                    <button th:if="${owner&&product.getStatus()==0}" class="btn btn-default btn-lg active"
+                            role="button"
+                            th:onclick="'javascript:setStatus(\''+${product.getId()}+'\',\''+'1'+'\');'">下架
+                    </button>
                 </div>
                 <div class="col-sm-2">
-                    <button class="btn btn-default btn-lg active" role="button">修改</button>
+                    <button th:if="${owner&&product.getStatus()==1}" class="btn btn-default btn-lg active"
+                            role="button"
+                            th:onclick="'javascript:setStatus(\''+${product.getId()}+'\',\''+'0'+'\');'">上架
+                    </button>
                 </div>
                 <div class="col-sm-2">
-                    <button class="btn btn-default btn-lg active" role="button">删除</button>
+                    <button th:if="${owner&&product.getStatus()==0}" class="btn btn-default btn-lg active"
+                            role="button">
+                        <a th:href="'release?productId='+${product.getId()}">修改</a>
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button th:if="${owner}" class="btn btn-default btn-lg active" role="button">
+                        <a th:href="'delete_product?id='+${product.getId()}">删除</a>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-sm-12" style="margin-bottom: 20px">
+                <div class="singl-pro-title">
+                    <div class="specific-pro">
+                        <ul th:if="${product.getType()==1}">
+                            <li class="specific-pro-title">
+                                出价表
+                            </li>
+                            <li>
+                                <span>价格</span>
+                                <p style="text-align: center">商品</p>
+                            </li>
+                            <li th:each="item,itemStat:${bidProducts}">
+                                <span th:text="${item.getPrice()}"></span>
+                                <a style="display: block;text-align: center;"
+                                   th:href="${'product_details?productId='+item.getId()}"
+                                   th:text="${item.getName()+' '+item.getProType()+' '+item.getPrice()+'RMB'}">
+                                </a>
+                            </li>
+                        </ul>
+                        <ul th:if="${product.getType()==0}">
+                            <li class="specific-pro-title">
+                                需求表
+                            </li>
+                            <li>
+                                <span>价格</span>
+                                <p style="text-align: center">需求</p>
+                            </li>
+                            <li th:each="item,itemStat:${bidProducts}">
+                                <span th:text="${item.getPrice()}"></span>
+                                <a style="display: block;text-align: center;"
+                                   th:href="${'product_details?productId='+item.getId()}"
+                                   th:text="${item.getName()+' '+item.getProType()+' '+item.getPrice()+'RMB'}">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 
 <footer>

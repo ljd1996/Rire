@@ -1,7 +1,9 @@
 package com.hearing.rire.controller;
 
+import com.hearing.rire.bean.BidList;
 import com.hearing.rire.bean.Product;
 import com.hearing.rire.bean.User;
+import com.hearing.rire.service.BidListServices;
 import com.hearing.rire.service.ProductServices;
 import com.hearing.rire.service.UserServices;
 import com.hearing.rire.util.Constant;
@@ -33,6 +35,10 @@ public class HttpController {
 
     @Autowired
     private ProductServices productServices;
+
+    @Autowired
+    private BidListServices bidListServices;
+
 
     @GetMapping("/")
     public String home() {
@@ -94,13 +100,14 @@ public class HttpController {
         }
         map.put("owner", owner);
         map.put("user", userServices.getUserById(product.getUserId()).getName());
+        map.put("bidProducts", bidListServices.getBidProductByMainId(productId));
         return "product_details";
     }
 
-    @GetMapping("/bid")
-    public String bid() {
-
-        return "product_details";
+    @GetMapping("/delete_product")
+    public String deleteProduct(@RequestParam("id") Integer id) {
+        productServices.deleteProduct(id);
+        return "index";
     }
 
     @PostMapping("/updateUser")
@@ -123,7 +130,10 @@ public class HttpController {
     }
 
     @GetMapping("/release")
-    public String release() {
+    public String release(Map<String, Product> map, @RequestParam("productId") Integer productId) {
+        if (productId != -1) {
+            map.put("product", productServices.getProduct(productId));
+        }
         return "release";
     }
 

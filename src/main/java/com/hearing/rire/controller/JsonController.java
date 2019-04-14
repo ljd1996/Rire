@@ -1,14 +1,20 @@
 package com.hearing.rire.controller;
 
+import com.hearing.rire.bean.BidList;
 import com.hearing.rire.bean.Product;
 import com.hearing.rire.bean.User;
+import com.hearing.rire.service.BidListServices;
 import com.hearing.rire.service.ProductServices;
 import com.hearing.rire.service.UserServices;
+import com.hearing.rire.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -23,6 +29,9 @@ public class JsonController {
     @Autowired
     private ProductServices productServices;
 
+    @Autowired
+    private BidListServices bidListServices;
+
 
     @GetMapping("/current_user")
     public User getUser() {
@@ -32,5 +41,15 @@ public class JsonController {
     @GetMapping("/my_goods")
     public List<Product> getMyGoods(Integer id) {
         return productServices.getMyGoods(id, true);
+    }
+
+    @PostMapping("/bid")
+    public Msg bid(BidList bidList) {
+        return bidListServices.addBid(bidList);
+    }
+
+    @GetMapping("/set_status")
+    public Msg setStatus(@RequestParam("id") int id, @RequestParam("status") int status) {
+        return productServices.updateProductStatus(id, status);
     }
 }
