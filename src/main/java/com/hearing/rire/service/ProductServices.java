@@ -58,17 +58,23 @@ public class ProductServices {
         return productMapper.selectByExample(example);
     }
 
-    public List<Product> getMyDemand(int userId) {
+    public List<Product> getMyDemand(int userId, boolean online) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
         criteria.andTypeEqualTo(1).andUserIdEqualTo(userId);
+        if (online) {
+            criteria.andStatusEqualTo(0);
+        }
         return productMapper.selectByExample(example);
     }
 
-    public List<Product> getMyGoods(int userId) {
+    public List<Product> getMyGoods(int userId, boolean online) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
         criteria.andTypeEqualTo(0).andUserIdEqualTo(userId);
+        if (online) {
+            criteria.andStatusEqualTo(0);
+        }
         return productMapper.selectByExample(example);
     }
 }

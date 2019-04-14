@@ -65,6 +65,10 @@
                     }
                 }
             });
+
+            $('#btn_bid').on("click", function () {
+                alert($('#bid_select').select)
+            });
         });
 
     </script>
@@ -198,6 +202,7 @@
                         </div>
                         <div style="text-align: center;margin-left: 72px" class="tag-n-s">
                             <span th:text="${product.getStatus()==0?'在架':'已下架'}"></span>
+                            <span th:if="${product.getStatus()==3}">已交易</span>
                         </div>
                     </div>
                 </div>
@@ -242,11 +247,12 @@
                                 <li>
                                     <span>类别</span>
                                     <a th:href="${'product?type='+product.getType()+'&proType='+product.getProType()}">
-                                    <p th:text="${product.getProType()}"></p></a>
+                                        <p th:text="${product.getProType()}"></p></a>
                                 </li>
                                 <li>
                                     <span>状态</span>
                                     <p th:text="${product.getStatus()==0?'在架':'已下架'}"></p>
+                                    <span th:if="${product.getStatus()==3}">已交易</span>
                                 </li>
                                 <li>
                                     <span>发布时间</span>
@@ -261,8 +267,33 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-12" style="margin-top: 18px;">
+                <div class="col-sm-4">
+                    <select name="goods" id="bid_select" class="shortselect">
+                        <option value="-1"> -- 请选择 --</option>
+                        <option th:each="item:${myGoods}"
+                                th:value="${item.getId()}"
+                                th:text="${item.getName()+' '+item.getProType()+' '+item.getPrice()+'RMB 发布时间:'+time}"></option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <button id="btn_bid" class="btn btn-default btn-lg active" role="button">出价</button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-lg active" role="button">下架</button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-lg active" role="button">上架</button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-lg active" role="button">修改</button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-lg active" role="button">删除</button>
+                </div>
+            </div>
         </div>
-    </div>
 </section>
 
 <footer>

@@ -1,15 +1,14 @@
 package com.hearing.rire.controller;
 
+import com.hearing.rire.bean.Product;
 import com.hearing.rire.bean.User;
+import com.hearing.rire.service.ProductServices;
 import com.hearing.rire.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 /**
@@ -21,9 +20,17 @@ public class JsonController {
     @Autowired
     private UserServices userServices;
 
+    @Autowired
+    private ProductServices productServices;
+
+
     @GetMapping("/current_user")
     public User getUser() {
         return userServices.getCurrentUser();
     }
 
+    @GetMapping("/my_goods")
+    public List<Product> getMyGoods(Integer id) {
+        return productServices.getMyGoods(id, true);
+    }
 }

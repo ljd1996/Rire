@@ -66,10 +66,10 @@ public class HttpController {
                 map.put("product", productServices.getAllDemand());
                 break;
             case Constant.TYPE_MY_GOODS:
-                map.put("product", productServices.getMyGoods(userServices.getCurrentUser().getId()));
+                map.put("product", productServices.getMyGoods(userServices.getCurrentUser().getId(), false));
                 break;
             case Constant.TYPE_MY_Demand:
-                map.put("product", productServices.getMyDemand(userServices.getCurrentUser().getId()));
+                map.put("product", productServices.getMyDemand(userServices.getCurrentUser().getId(), false));
                 break;
             default:
                 map.put("product", type == 0 ? productServices.getGoodsByType(proType) : productServices.getDemandByType(proType));
@@ -85,11 +85,21 @@ public class HttpController {
         map.put("time", new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(product.getTime()));
         User user = userServices.getCurrentUser();
         boolean owner = false;
-        if (user != null && user.getId().equals(product.getUserId())) {
-            owner = true;
+        if (user != null) {
+            if (user.getId().equals(product.getUserId())) {
+                owner = true;
+            } else {
+                map.put("myGoods", productServices.getMyGoods(user.getId(), true));
+            }
         }
         map.put("owner", owner);
         map.put("user", userServices.getUserById(product.getUserId()).getName());
+        return "product_details";
+    }
+
+    @GetMapping("/bid")
+    public String bid() {
+
         return "product_details";
     }
 
