@@ -210,4 +210,10 @@ public class HttpController {
         }
         return "index";
     }
+
+    @GetMapping("/my_order")
+    public String myOrder(Map<String, List<Order>> map) {
+        map.put("orders", orderServices.getMyOrder(userServices.getCurrentUser().getId()));
+        return "my_order";
+    }
 }
