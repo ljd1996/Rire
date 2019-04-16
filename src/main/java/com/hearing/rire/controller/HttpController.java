@@ -141,27 +141,36 @@ public class HttpController {
     public String uploadArticle(Product product,
                                 @RequestParam(value = "file", required = false) MultipartFile file) {
         try {
-            String name = file.getOriginalFilename();
-            String preffix = name.substring(0, name.lastIndexOf("."));
-            String subffix = name.substring(name.lastIndexOf("."), name.length());
-            long time = new Date().getTime();
-            String fileName = preffix + new SimpleDateFormat("yyyyMMddHHmmss").format(time) + subffix;
-            String filepath = Utils.getResPath();
-
-            File f = new File(filepath);
-            if (!f.exists()) {
-                f.mkdirs();
+            String filePath = Utils.getImgPath(file);
+            if (filePath != null) {
+                product.setImage(filePath);
             }
-            f = new File(filepath + fileName);
-            f.createNewFile();
-            file.transferTo(f);
 
             product.setStatus(Constant.PRO_STATUS_ON);
-            product.setImage(filepath + fileName);
-            product.setTime(time);
+            product.setTime(new Date().getTime());
             product.setUserId(userServices.getCurrentUser().getId());
 
             productServices.addProduct(product);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "index";
+    }
+
+    @PostMapping("/updateProduct")
+    public String updateProduct(Product product,
+                                @RequestParam(value = "file", required = false) MultipartFile file) {
+        try {
+            String filePath = Utils.getImgPath(file);
+            if (filePath != null) {
+                product.setImage(filePath);
+            }
+
+            product.setStatus(Constant.PRO_STATUS_ON);
+            product.setTime(new Date().getTime());
+            product.setUserId(userServices.getCurrentUser().getId());
+
+            productServices.updateProduct(product);
         } catch (IOException e) {
             e.printStackTrace();
         }

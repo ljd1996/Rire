@@ -66,7 +66,8 @@
                 }
             });
 
-            $('#chooseImage').on('change', function () {
+
+            $('#chooseImage1').on('change', function () {
                 var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
                     fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
                     src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
@@ -77,7 +78,21 @@
                     return;
                 }
 
-                $('#cropedBigImg').attr('src', src);
+                $('#cropedBigImg1').attr('src', src);
+            });
+
+            $('#chooseImage2').on('change', function () {
+                var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
+                    fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
+                    src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
+
+                // 检查是否是图片
+                if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
+                    error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
+                    return;
+                }
+
+                $('#cropedBigImg2').attr('src', src);
             });
         });
 
@@ -203,23 +218,22 @@
             <div class="col-sm-12">
                 <div class="row">
                     <div class="contact-form clearfix">
-                        <form action="/releaseAction" enctype="multipart/form-data" method="post">
+                        <form th:if="${product==null}" action="/releaseAction" enctype="multipart/form-data"
+                              method="post">
                             <div class="col-sm-6">
                                 <div class="input-text">
-                                    <input th:if="${product==null}" type="text" name="name" placeholder="商品名称"/>
-                                    <input th:if="${product!=null}" th:value="${product.getName()}" type="text"
-                                           name="name"/>
+                                    <input type="text" name="name" placeholder="商品名称"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <select name="type" id="selecte" class="shortselect">
+                                <select name="type" id="select1" class="shortselect">
                                     <option value="0" selected="selected">商品</option>
                                     <option value="1">需求</option>
                                 </select>
                             </div>
 
                             <div class="col-sm-6">
-                                <select name="proType" id="select" class="shortselect">
+                                <select name="proType" id="select3" class="shortselect">
                                     <option value="TypeA" selected="selected">TypeA</option>
                                     <option value="TypeB">TypeB</option>
                                     <option value="TypeC">TypeC</option>
@@ -237,18 +251,75 @@
 
                             <div class="col-xs-8">
                                 <div class="input-text">
-                                    <textarea name="description" placeholder="描述" rows="5"></textarea>
+                                    <textarea name="description" placeholder="描述"
+                                              rows="5"></textarea>
                                 </div>
                             </div>
                             <div class="col-xs-4">
-                                <input type="file" id="chooseImage" name="file">
-                                <img id="cropedBigImg" alt="lorem ipsum dolor sit" data-address=''
+                                <input type="file" id="chooseImage1" name="file">
+                                <img id="cropedBigImg1" alt="lorem ipsum dolor sit"
+                                     data-address=''
                                      title="自定义背景"/>
                             </div>
 
                             <div class="col-xs-12">
                                 <div class="submit-text">
                                     <input type="submit" name="submit" value="发布"/>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form th:if="${product!=null}" action="/updateProduct" enctype="multipart/form-data"
+                              method="post">
+                            <input hidden="hidden" name="id" th:value="${product.getId()}">
+                            <div class="col-sm-6">
+                                <div class="input-text">
+                                    <input th:value="${product.getName()}" type="text"
+                                           name="name"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <select name="type" id="select2" class="shortselect">
+                                    <option value="0" th:selected="${product.getType()==0}">商品</option>
+                                    <option value="1" th:selected="${product.getType()==1}">需求</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <select name="proType" id="select4" class="shortselect">
+                                    <option value="TypeA" th:selected="${product.getProType()=='TypeA'}">TypeA</option>
+                                    <option value="TypeB" th:selected="${product.getProType()=='TypeB'}">TypeB</option>
+                                    <option value="TypeC" th:selected="${product.getProType()=='TypeC'}">TypeC</option>
+                                    <option value="TypeD" th:selected="${product.getProType()=='TypeD'}">TypeD</option>
+                                    <option value="TypeE" th:selected="${product.getProType()=='TypeE'}">TypeE</option>
+                                    <option value="TypeF" th:selected="${product.getProType()=='TypeF'}">TypeF</option>
+                                    <option value="TypeG" th:selected="${product.getProType()=='TypeG'}">TypeG</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-text">
+                                    <input type="text" name="price"
+                                           th:value="${product.getPrice()}"/>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-8">
+                                <div class="input-text">
+                                    <textarea name="description"
+                                              th:text="${product.getDescription()}"
+                                              rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <input type="file" id="chooseImage2" name="file">
+                                <img id="cropedBigImg2" alt="lorem ipsum dolor sit"
+                                     title="自定义背景"
+                                     th:src="${'image/'+product.getImage().substring(product.getImage().lastIndexOf('/')+1)}"/>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div class="submit-text">
+                                    <input type="submit" name="submit" value="修改"/>
                                 </div>
                             </div>
                         </form>

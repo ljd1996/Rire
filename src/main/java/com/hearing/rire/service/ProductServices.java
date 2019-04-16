@@ -98,6 +98,14 @@ public class ProductServices {
                 Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
+    public Msg updateProduct(Product product) {
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(product.getId());
+        return Msg.response(productMapper.updateByExampleSelective(product, example) >= 1 ?
+                Msg.CODE_SUCCESS : Msg.CODE_FAIL);
+    }
+
     public Msg deleteProduct(int id) {
         return Msg.response(productMapper.deleteByPrimaryKey(id) >= 1 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
