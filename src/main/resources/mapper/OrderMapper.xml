@@ -3,13 +3,14 @@
 <mapper namespace="com.hearing.rire.dao.OrderMapper">
   <resultMap id="BaseResultMap" type="com.hearing.rire.bean.Order">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="time" jdbcType="BIGINT" property="time" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="user_supplier_id" jdbcType="INTEGER" property="userSupplierId" />
     <result column="user_buyer_id" jdbcType="INTEGER" property="userBuyerId" />
     <result column="pro_supplier_id" jdbcType="INTEGER" property="proSupplierId" />
-    <result column="pro_buyer_id" jdbcType="INTEGER" property="proBuyerId" />
-    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="order_time" jdbcType="BIGINT" property="orderTime" />
+    <result column="finish_time" jdbcType="BIGINT" property="finishTime" />
+    <result column="pay_time" jdbcType="BIGINT" property="payTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,8 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, time, status, user_supplier_id, user_buyer_id, pro_supplier_id, pro_buyer_id, 
-    location
+    id, location, status, user_supplier_id, user_buyer_id, pro_supplier_id, order_time, 
+    finish_time, pay_time
   </sql>
   <select id="selectByExample" parameterType="com.hearing.rire.bean.OrderExample" resultMap="BaseResultMap">
     select
@@ -79,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from order
+    from orderlist
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,35 +91,37 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from order
+    from orderlist
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
+    delete from orderlist
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.hearing.rire.bean.OrderExample">
-    delete from order
+    delete from orderlist
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.hearing.rire.bean.Order">
-    insert into order (id, time, status, 
+    insert into orderlist (id, location, status, 
       user_supplier_id, user_buyer_id, pro_supplier_id, 
-      pro_buyer_id, location)
-    values (#{id,jdbcType=INTEGER}, #{time,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      order_time, finish_time, pay_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{location,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{userSupplierId,jdbcType=INTEGER}, #{userBuyerId,jdbcType=INTEGER}, #{proSupplierId,jdbcType=INTEGER}, 
-      #{proBuyerId,jdbcType=INTEGER}, #{location,jdbcType=VARCHAR})
+      #{orderTime,jdbcType=BIGINT}, #{finishTime,jdbcType=BIGINT}, #{payTime,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.hearing.rire.bean.Order">
-    insert into order
+    insert into orderlist
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="time != null">
-        time,
+      <if test="location != null">
+        location,
       </if>
       <if test="status != null">
         status,
@@ -132,19 +135,22 @@
       <if test="proSupplierId != null">
         pro_supplier_id,
       </if>
-      <if test="proBuyerId != null">
-        pro_buyer_id,
+      <if test="orderTime != null">
+        order_time,
       </if>
-      <if test="location != null">
-        location,
+      <if test="finishTime != null">
+        finish_time,
+      </if>
+      <if test="payTime != null">
+        pay_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="time != null">
-        #{time,jdbcType=BIGINT},
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -158,28 +164,31 @@
       <if test="proSupplierId != null">
         #{proSupplierId,jdbcType=INTEGER},
       </if>
-      <if test="proBuyerId != null">
-        #{proBuyerId,jdbcType=INTEGER},
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=BIGINT},
       </if>
-      <if test="location != null">
-        #{location,jdbcType=VARCHAR},
+      <if test="finishTime != null">
+        #{finishTime,jdbcType=BIGINT},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.hearing.rire.bean.OrderExample" resultType="java.lang.Long">
-    select count(*) from order
+    select count(*) from orderlist
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update order
+    update orderlist
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.time != null">
-        time = #{record.time,jdbcType=BIGINT},
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
@@ -193,11 +202,14 @@
       <if test="record.proSupplierId != null">
         pro_supplier_id = #{record.proSupplierId,jdbcType=INTEGER},
       </if>
-      <if test="record.proBuyerId != null">
-        pro_buyer_id = #{record.proBuyerId,jdbcType=INTEGER},
+      <if test="record.orderTime != null">
+        order_time = #{record.orderTime,jdbcType=BIGINT},
       </if>
-      <if test="record.location != null">
-        location = #{record.location,jdbcType=VARCHAR},
+      <if test="record.finishTime != null">
+        finish_time = #{record.finishTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.payTime != null">
+        pay_time = #{record.payTime,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -205,24 +217,25 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update order
+    update orderlist
     set id = #{record.id,jdbcType=INTEGER},
-      time = #{record.time,jdbcType=BIGINT},
+      location = #{record.location,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       user_supplier_id = #{record.userSupplierId,jdbcType=INTEGER},
       user_buyer_id = #{record.userBuyerId,jdbcType=INTEGER},
       pro_supplier_id = #{record.proSupplierId,jdbcType=INTEGER},
-      pro_buyer_id = #{record.proBuyerId,jdbcType=INTEGER},
-      location = #{record.location,jdbcType=VARCHAR}
+      order_time = #{record.orderTime,jdbcType=BIGINT},
+      finish_time = #{record.finishTime,jdbcType=BIGINT},
+      pay_time = #{record.payTime,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.hearing.rire.bean.Order">
-    update order
+    update orderlist
     <set>
-      <if test="time != null">
-        time = #{time,jdbcType=BIGINT},
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -236,24 +249,28 @@
       <if test="proSupplierId != null">
         pro_supplier_id = #{proSupplierId,jdbcType=INTEGER},
       </if>
-      <if test="proBuyerId != null">
-        pro_buyer_id = #{proBuyerId,jdbcType=INTEGER},
+      <if test="orderTime != null">
+        order_time = #{orderTime,jdbcType=BIGINT},
       </if>
-      <if test="location != null">
-        location = #{location,jdbcType=VARCHAR},
+      <if test="finishTime != null">
+        finish_time = #{finishTime,jdbcType=BIGINT},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hearing.rire.bean.Order">
-    update order
-    set time = #{time,jdbcType=BIGINT},
+    update orderlist
+    set location = #{location,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       user_supplier_id = #{userSupplierId,jdbcType=INTEGER},
       user_buyer_id = #{userBuyerId,jdbcType=INTEGER},
       pro_supplier_id = #{proSupplierId,jdbcType=INTEGER},
-      pro_buyer_id = #{proBuyerId,jdbcType=INTEGER},
-      location = #{location,jdbcType=VARCHAR}
+      order_time = #{orderTime,jdbcType=BIGINT},
+      finish_time = #{finishTime,jdbcType=BIGINT},
+      pay_time = #{payTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

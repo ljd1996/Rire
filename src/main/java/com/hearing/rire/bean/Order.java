@@ -3,7 +3,7 @@ package com.hearing.rire.bean;
 public class Order {
     private Integer id;
 
-    private Long time;
+    private String location;
 
     private Integer status;
 
@@ -13,9 +13,11 @@ public class Order {
 
     private Integer proSupplierId;
 
-    private Integer proBuyerId;
+    private Long orderTime;
 
-    private String location;
+    private Long finishTime;
+
+    private Long payTime;
 
     public Integer getId() {
         return id;
@@ -25,12 +27,12 @@ public class Order {
         this.id = id;
     }
 
-    public Long getTime() {
-        return time;
+    public String getLocation() {
+        return location;
     }
 
-    public void setTime(Long time) {
-        this.time = time;
+    public void setLocation(String location) {
+        this.location = location == null ? null : location.trim();
     }
 
     public Integer getStatus() {
@@ -65,19 +67,27 @@ public class Order {
         this.proSupplierId = proSupplierId;
     }
 
-    public Integer getProBuyerId() {
-        return proBuyerId;
+    public Long getOrderTime() {
+        return orderTime;
     }
 
-    public void setProBuyerId(Integer proBuyerId) {
-        this.proBuyerId = proBuyerId;
+    public void setOrderTime(Long orderTime) {
+        this.orderTime = orderTime;
     }
 
-    public String getLocation() {
-        return location;
+    public Long getFinishTime() {
+        return finishTime;
     }
 
-    public void setLocation(String location) {
-        this.location = location == null ? null : location.trim();
+    public void setFinishTime(Long finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public Long getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Long payTime) {
+        this.payTime = payTime;
     }
 }

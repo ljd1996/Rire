@@ -223,8 +223,10 @@
                             <span th:text="${product.getType()==0?'Goods':'Demand'}"></span>
                         </div>
                         <div style="text-align: center;margin-left: 72px" class="tag-n-s">
-                            <span th:text="${product.getStatus()==0?'在架':'已下架'}"></span>
-                            <span th:if="${product.getStatus()==3}">已交易</span>
+                            <span th:if="${product.getStatus()==0}">在架</span>
+                            <span th:if="${product.getStatus()==1}">已下架</span>
+                            <span th:if="${product.getStatus()==2}">已交易</span>
+                            <span th:if="${product.getStatus()==3}">锁定中</span>
                         </div>
                     </div>
                 </div>
@@ -273,8 +275,10 @@
                                 </li>
                                 <li>
                                     <span>状态</span>
-                                    <p th:text="${product.getStatus()==0?'在架':'已下架'}"></p>
-                                    <span th:if="${product.getStatus()==3}">已交易</span>
+                                    <p th:if="${product.getStatus()==0}">在架</p>
+                                    <p th:if="${product.getStatus()==1}">已下架</p>
+                                    <p th:if="${product.getStatus()==2}">已交易</p>
+                                    <p th:if="${product.getStatus()==3}">锁定中</p>
                                 </li>
                                 <li>
                                     <span>发布时间</span>
@@ -291,51 +295,53 @@
             </div>
 
             <div class="col-sm-12" style="margin-top: 18px;">
-                <div class="col-sm-3">
-                    <select id="bid_select" class="shortselect" th:if="${!owner}">
+                <div class="col-sm-6" th:if="${product.getType()==1&&product.getStatus()==0&&!owner}">
+                    <select id="bid_select" class="shortselect">
                         <option value="-1"> -- 请选择 --</option>
                         <option th:each="item:${myGoods}"
                                 th:value="${item.getId()}"
                                 th:text="${item.getName()+' '+item.getProType()+' '+item.getPrice()+'RMB 发布时间:'+time}"></option>
                     </select>
-                </div>
-                <div class="col-sm-2">
                     <button th:if="${product.getType()==1&&product.getStatus()==0&&!owner}"
-                            class="btn btn-default btn-lg active" role="button"
+                            class="submit-text btn btn-default btn-lg active" role="button"
                             th:onclick="'javascript:bid(\''+${product.getId()}+'\');'">出价
                     </button>
                 </div>
-                <div class="col-sm-2">
-                    <button th:if="${product.getType()==0&&product.getStatus()==0&&!owner}"
-                            class="btn btn-default btn-lg active" role="button">购买
-                    </button>
+
+                <div class="col-sm-6" th:if="${product.getType()==0&&product.getStatus()==0&&!owner}">
+                    <form method="post" action="upload_contract"
+                          enctype="multipart/form-data">
+                        <input hidden="hidden" name="productId" th:value="${product.getId()}">
+                        <input type="file" id="chooseContract" name="contract">
+                        <div class="submit-text btn btn-default btn-lg active">
+                            <input type="submit" name="submit" value="购买"/>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-sm-2">
-                    <button th:if="${owner&&product.getStatus()==0}" class="btn btn-default btn-lg active"
-                            role="button"
+
+                <div class="col-sm-2" th:if="${owner&&product.getStatus()==0}">
+                    <button class="submit-text btn btn-default btn-lg active" role="button"
                             th:onclick="'javascript:setStatus(\''+${product.getId()}+'\',\''+'1'+'\');'">下架
                     </button>
                 </div>
-                <div class="col-sm-2">
-                    <button th:if="${owner&&product.getStatus()==1}" class="btn btn-default btn-lg active"
-                            role="button"
+                <div class="col-sm-2" th:if="${owner&&product.getStatus()==1}">
+                    <button class="submit-text btn btn-default btn-lg active" role="button"
                             th:onclick="'javascript:setStatus(\''+${product.getId()}+'\',\''+'0'+'\');'">上架
                     </button>
                 </div>
-                <div class="col-sm-2">
-                    <button th:if="${owner&&product.getStatus()==0}" class="btn btn-default btn-lg active"
-                            role="button">
+                <div class="col-sm-2" th:if="${owner&&product.getStatus()==0}">
+                    <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:href="'release?productId='+${product.getId()}">修改</a>
                     </button>
                 </div>
-                <div class="col-sm-2">
-                    <button th:if="${owner}" class="btn btn-default btn-lg active" role="button">
+                <div class="col-sm-2" th:if="${owner&&product.getStatus()!=3}">
+                    <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:href="'delete_product?id='+${product.getId()}">删除</a>
                     </button>
                 </div>
             </div>
 
-            <div class="col-sm-12" style="margin-bottom: 20px">
+            <div class="col-sm-12" style="margin-top: 15px;margin-bottom: 40px">
                 <div class="singl-pro-title">
                     <div class="specific-pro">
                         <ul th:if="${product.getType()==1}">

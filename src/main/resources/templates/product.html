@@ -200,8 +200,10 @@
                                         <span th:text="${item.getType()==0?'Goods':'Demand'}"></span>
                                     </div>
                                     <div class="tag-n-s" style="margin-left: 72px">
-                                        <span th:text="${item.getStatus()==0?'在架':'已下架'}"></span>
-                                        <span th:if="${item.getStatus()==3}">已交易</span>
+                                        <span th:if="${item.getStatus()==0}">在架</span>
+                                        <span th:if="${item.getStatus()==1}">已下架</span>
+                                        <span th:if="${item.getStatus()==2}">已交易</span>
+                                        <span th:if="${item.getStatus()==3}">锁定中</span>
                                     </div>
                                 </div>
                                 <div class="product-title">

@@ -14,4 +14,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/rire?autoReconnect=true&useSSL=false&nullCatalogMeansCurrent=true&useUnicode=true&characterEncoding=UTF-8
 
+logging:
+  level:
+    com:
+      hearing:
+        rire:
+          dao: debug
+
+
 

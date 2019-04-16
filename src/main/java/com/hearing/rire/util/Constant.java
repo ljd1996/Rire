@@ -18,7 +18,8 @@ public class Constant {
 
     public static final int PRO_STATUS_ON = 0;
     public static final int PRO_STATUS_OFF = 1;
-    public static final int PRO_STATUS_SELL = 2;
+    public static final int PRO_STATUS_SELLED = 2;
+    public static final int PRO_STATUS_LOCKED = 3;
 
     public static final int ORDER_STATUS_CONTRACT_NOT_CONFIRM = 0;  // 合同待确认
     public static final int ORDER_STATUS_CONTRACT_CONFIRM = 1;      // 合同确认

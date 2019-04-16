@@ -1,9 +1,11 @@
 package com.hearing.rire.controller;
 
 import com.hearing.rire.bean.BidList;
+import com.hearing.rire.bean.Order;
 import com.hearing.rire.bean.Product;
 import com.hearing.rire.bean.User;
 import com.hearing.rire.service.BidListServices;
+import com.hearing.rire.service.OrderServices;
 import com.hearing.rire.service.ProductServices;
 import com.hearing.rire.service.UserServices;
 import com.hearing.rire.util.Constant;
@@ -38,6 +40,9 @@ public class HttpController {
 
     @Autowired
     private BidListServices bidListServices;
+
+    @Autowired
+    private OrderServices orderServices;
 
 
     @GetMapping("/")
@@ -171,6 +176,35 @@ public class HttpController {
             product.setUserId(userServices.getCurrentUser().getId());
 
             productServices.updateProduct(product);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "index";
+    }
+
+    @PostMapping("/upload_contract")
+    public String uploadContract(@RequestParam("productId") Integer productId,
+                                 @RequestParam("contract") MultipartFile contract) {
+        try {
+            String filePath = Utils.getImgPath(contract);
+            if (filePath != null) {
+                Product product = productServices.getProduct(productId);
+
+                Order order = new Order();
+                order.setLocation(filePath);
+                order.setOrderTime(new Date().getTime());
+                order.setPayTime(0L);
+                order.setFinishTime(0L);
+                order.setStatus(Constant.ORDER_STATUS_CONTRACT_NOT_CONFIRM);
+                order.setProSupplierId(productId);
+                order.setUserSupplierId(product.getUserId());
+                order.setUserBuyerId(userServices.getCurrentUser().getId());
+
+                orderServices.addOrder(order);
+
+                product.setStatus(Constant.PRO_STATUS_LOCKED);
+                productServices.updateProductStatus(productId, Constant.PRO_STATUS_LOCKED);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
