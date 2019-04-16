@@ -212,8 +212,10 @@ public class HttpController {
     }
 
     @GetMapping("/my_order")
-    public String myOrder(Map<String, List<Order>> map) {
-        map.put("orders", orderServices.getMyOrder(userServices.getCurrentUser().getId()));
-        return "my_order";
+    public String myOrder(Map<String, Object> map) {
+        List<Order> orders = orderServices.getMyOrder(userServices.getCurrentUser().getId());
+        map.put("orders", orders);
+        map.put("products", orderServices.getProductsByOrders(orders));
+        return "order";
     }
 }
