@@ -29,15 +29,18 @@ public class OrderServices {
         return Msg.response(orderMapper.insert(order) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
+    public Order getOrder(int id) {
+        return orderMapper.selectByPrimaryKey(id);
+    }
+
     public List<Order> getMyOrder(int userId) {
         OrderExample example = new OrderExample();
         OrderExample.Criteria criteria = example.createCriteria();
         criteria.andUserBuyerIdEqualTo(userId);
-        List<Order> orders = orderMapper.selectByExample(example);
-        criteria = example.createCriteria();
-        criteria.andUserSupplierIdEqualTo(userId);
-        orders.addAll(orderMapper.selectByExample(example));
-        return orders;
+        OrderExample.Criteria criteria1 = example.createCriteria();
+        criteria1.andUserSupplierIdEqualTo(userId);
+        example.or(criteria1);
+        return orderMapper.selectByExample(example);
     }
 
     public List<Product> getProductsByOrders(List<Order> orders) {

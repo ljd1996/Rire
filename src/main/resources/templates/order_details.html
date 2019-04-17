@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>我的订单</title>
+    <title>Home</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon -->
@@ -179,53 +179,183 @@
 </header>
 
 <div class="page-banner">
-    <img src="img/slider/bg3.jpg" alt="Page Banner"/>
+    <img src="img/slider/bg1.jpg" alt="Page Banner"/>
 </div>
 
-<section class="product-content section-padding">
+<section class="product-details section-padding-top">
     <div class="container">
         <div class="row">
-            <div class="tab-content">
-                <div class="tab-pane fade in active text-center" id="grid">
-                    <div class="single-products" th:each="item,itemStat : ${orders}">
-                        <div class="col-xs-12 col-sm-4">
-                            <div class="product-item margin40">
-                                <div class="pro-img">
-                                    <a th:href="${'order_details?orderId='+item.getId().intValue()}">
-                                        <img th:src="${'image/'+products.get(itemStat.index).getImage().substring(products.get(itemStat.index).getImage().lastIndexOf('/')+1)}"
-                                             alt="Product"
-                                             style="width: 100%;height: 320px;object-fit: cover"/>
-                                    </a>
-                                    <div class="tag-n-s">
-                                        <span th:text="${user.getId()==item.getUserBuyerId()?'我是买家':'我是卖家'}"></span>
-                                    </div>
-                                    <div class="tag-n-s" style="width: 72px; margin-left: 80px">
-                                        <span th:if="${item.getStatus()==0}">合同待确认</span>
-                                        <span th:if="${item.getStatus()==1}">合同确认</span>
-                                        <span th:if="${item.getStatus()==2}">已支付待发货</span>
-                                        <span th:if="${item.getStatus()==3}">已发货</span>
-                                        <span th:if="${item.getStatus()==4}">已收货</span>
-                                        <span th:if="${item.getStatus()==5}">退款中</span>
-                                        <span th:if="${item.getStatus()==6}">退款退货中</span>
-                                        <span th:if="${item.getStatus()==7}">已取消</span>
-                                    </div>
-                                </div>
-                                <div class="product-title">
-                                    <a th:href="${'order_details?orderId='+item.getId().intValue()}"><h5
-                                            th:text="'订单信息:'+${products.get(itemStat.index).getName()}"></h5></a>
-                                    <span th:text="${' '+products.get(itemStat.index).getProType()}"></span>
-                                    <p><span th:text="${'价格:'+products.get(itemStat.index).getPrice()+'RMB'}"></span>
-                                    </p>
-                                </div>
-                            </div>
+            <div class="col-sm-6">
+                <div class="left">
+                    <div class="pro-img">
+                        <a th:href="${'image/'+product.getImage().substring(product.getImage().lastIndexOf('/')+1)}">
+                            <img th:src="${'image/'+product.getImage().substring(product.getImage().lastIndexOf('/')+1)}"
+                                 alt="Product"
+                                 style="width: 720px;height: 720px;object-fit: cover"/>
+                        </a>
+                        <div style="text-align: center" class="tag-n-s">
+                            <span th:text="${product.getType()==0?'Goods':'Demand'}"></span>
                         </div>
+                        <div style="text-align: center;margin-left: 72px" class="tag-n-s">
+                            <span th:if="${product.getStatus()==0}">在架</span>
+                            <span th:if="${product.getStatus()==1}">已下架</span>
+                            <span th:if="${product.getStatus()==2}">已交易</span>
+                            <span th:if="${product.getStatus()==3}">锁定中</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="right">
+                    <div class="singl-pro-title">
+                        <h1 th:text="${product.getName()}"></h1>
+                        <h3 th:text="${product.getPrice()+'RMB'}"></h3>
+                        <div class="categ-tag">
+                            <h4>
+                                <ul class="clearfix">
+                                    <li>
+                                        类别:
+                                        <a th:href="${'product?type='+product.getType()+'&proType='+product.getProType()}"
+                                           th:text="${product.getProType()}"></a>
+                                    </li>
+                                </ul>
+                            </h4>
+                        </div>
+                        <hr/>
+                        <p th:text="${'信息: '+product.getDescription()}"></p>
+                        <hr/>
+
+                        <div class="specific-pro">
+                            <ul>
+                                <li class="specific-pro-title">
+                                    基本信息
+                                </li>
+                                <li>
+                                    <span>名称</span>
+                                    <p th:text="${product.getName()}"></p>
+                                </li>
+                                <li>
+                                    <span>价格</span>
+                                    <p th:text="${product.getPrice()}"></p>
+                                </li>
+                                <li>
+                                    <span>发布类型</span>
+                                    <p th:text="${product.getType()==1?'采购':'供应'}"></p>
+                                </li>
+                                <li>
+                                    <span>类别</span>
+                                    <a th:href="${'product?type='+product.getType()+'&proType='+product.getProType()}">
+                                        <p th:text="${product.getProType()}"></p></a>
+                                </li>
+                                <li>
+                                    <span>状态</span>
+                                    <p th:if="${product.getStatus()==0}">在架</p>
+                                    <p th:if="${product.getStatus()==1}">已下架</p>
+                                    <p th:if="${product.getStatus()==2}">已交易</p>
+                                    <p th:if="${product.getStatus()==3}">锁定中</p>
+                                </li>
+                                <li>
+                                    <span>发布时间</span>
+                                    <p th:text="${time}"></p>
+                                </li>
+                                <li>
+                                    <span>发布人</span>
+                                    <p th:text="${user}"></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12" style="margin-top: 18px;">
+                <div class="col-sm-6" th:if="${product.getType()==1&&product.getStatus()==0&&!owner}">
+                    <select id="bid_select" class="shortselect">
+                        <option value="-1"> -- 请选择 --</option>
+                        <option th:each="item:${myGoods}"
+                                th:value="${item.getId()}"
+                                th:text="${item.getName()+' '+item.getProType()+' '+item.getPrice()+'RMB 发布时间:'+time}"></option>
+                    </select>
+                    <button th:if="${product.getType()==1&&product.getStatus()==0&&!owner}"
+                            class="submit-text btn btn-default btn-lg active" role="button"
+                            th:onclick="'javascript:bid(\''+${product.getId()}+'\');'">出价
+                    </button>
+                </div>
+
+                <div class="col-sm-6" th:if="${product.getType()==0&&product.getStatus()==0&&!owner}">
+                    <form method="post" action="upload_contract"
+                          enctype="multipart/form-data">
+                        <input hidden="hidden" name="productId" th:value="${product.getId()}">
+                        <input type="file" id="chooseContract" name="contract">
+                        <div class="submit-text btn btn-default btn-lg active">
+                            <input type="submit" name="submit" value="购买"/>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-2" th:if="${owner&&product.getStatus()==0}">
+                    <button class="submit-text btn btn-default btn-lg active" role="button"
+                            th:onclick="'javascript:setStatus(\''+${product.getId()}+'\',\''+'1'+'\');'">下架
+                    </button>
+                </div>
+                <div class="col-sm-2" th:if="${owner&&product.getStatus()==1}">
+                    <button class="submit-text btn btn-default btn-lg active" role="button"
+                            th:onclick="'javascript:setStatus(\''+${product.getId()}+'\',\''+'0'+'\');'">上架
+                    </button>
+                </div>
+                <div class="col-sm-2" th:if="${owner&&product.getStatus()==0}">
+                    <button class="submit-text btn btn-default btn-lg active" role="button">
+                        <a th:href="'release?productId='+${product.getId()}">修改</a>
+                    </button>
+                </div>
+                <div class="col-sm-2" th:if="${owner&&product.getStatus()!=3}">
+                    <button class="submit-text btn btn-default btn-lg active" role="button">
+                        <a th:href="'delete_product?id='+${product.getId()}">删除</a>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-sm-12" style="margin-top: 15px;margin-bottom: 40px">
+                <div class="singl-pro-title">
+                    <div class="specific-pro">
+                        <ul th:if="${product.getType()==1}">
+                            <li class="specific-pro-title">
+                                出价表
+                            </li>
+                            <li>
+                                <span>价格</span>
+                                <p style="text-align: center">商品</p>
+                            </li>
+                            <li th:each="item,itemStat:${bidProducts}">
+                                <span th:text="${item.getPrice()}"></span>
+                                <a style="display: block;text-align: center;"
+                                   th:href="${'product_details?productId='+item.getId()}"
+                                   th:text="${item.getName()+' '+item.getProType()+' '+item.getPrice()+'RMB'}">
+                                </a>
+                            </li>
+                        </ul>
+                        <ul th:if="${product.getType()==0}">
+                            <li class="specific-pro-title">
+                                需求表
+                            </li>
+                            <li>
+                                <span>价格</span>
+                                <p style="text-align: center">需求</p>
+                            </li>
+                            <li th:each="item,itemStat:${bidProducts}">
+                                <span th:text="${item.getPrice()}"></span>
+                                <a style="display: block;text-align: center;"
+                                   th:href="${'product_details?productId='+item.getId()}"
+                                   th:text="${item.getName()+' '+item.getProType()+' '+item.getPrice()+'RMB'}">
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 
 <footer>
     <div class="footer-logo-text padding-close">

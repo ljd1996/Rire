@@ -216,6 +216,15 @@ public class HttpController {
         List<Order> orders = orderServices.getMyOrder(userServices.getCurrentUser().getId());
         map.put("orders", orders);
         map.put("products", orderServices.getProductsByOrders(orders));
+        map.put("user", userServices.getCurrentUser());
         return "order";
+    }
+
+    @GetMapping("/order_details")
+    public String orderDetails(Map<String, Object> map, @RequestParam("orderId") Integer orderId) {
+        Order order = orderServices.getOrder(orderId);
+        map.put("order", order);
+        map.put("product", productServices.getProduct(order.getProSupplierId()));
+        return "order_details";
     }
 }
