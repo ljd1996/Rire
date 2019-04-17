@@ -4,6 +4,7 @@ import com.hearing.rire.bean.BidList;
 import com.hearing.rire.bean.Product;
 import com.hearing.rire.bean.User;
 import com.hearing.rire.service.BidListServices;
+import com.hearing.rire.service.OrderServices;
 import com.hearing.rire.service.ProductServices;
 import com.hearing.rire.service.UserServices;
 import com.hearing.rire.util.Msg;
@@ -32,6 +33,9 @@ public class JsonController {
     @Autowired
     private BidListServices bidListServices;
 
+    @Autowired
+    private OrderServices orderServices;
+
 
     @GetMapping("/current_user")
     public User getUser() {
@@ -51,5 +55,10 @@ public class JsonController {
     @GetMapping("/set_status")
     public Msg setStatus(@RequestParam("id") int id, @RequestParam("status") int status) {
         return productServices.updateProductStatus(id, status);
+    }
+
+    @GetMapping("/set_order_status")
+    public Msg setOrderStatus(@RequestParam("id") int id, @RequestParam("status") int status) {
+        return orderServices.updateOrderStatus(id, status);
     }
 }

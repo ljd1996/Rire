@@ -45,10 +45,20 @@ public class OrderServices {
 
     public List<Product> getProductsByOrders(List<Order> orders) {
         List<Product> products = new ArrayList<>();
-        for (Order order:orders) {
+        for (Order order : orders) {
             Product product = productMapper.selectByPrimaryKey(order.getProSupplierId());
             products.add(product);
         }
         return products;
+    }
+
+    public Msg updateOrderStatus(int id, int status) {
+        Order order = getOrder(id);
+        order.setStatus(status);
+        OrderExample example = new OrderExample();
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(id);
+        return Msg.response(orderMapper.updateByExampleSelective(order, example) >= 1 ?
+                Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 }

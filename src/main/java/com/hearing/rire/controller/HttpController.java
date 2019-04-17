@@ -225,6 +225,13 @@ public class HttpController {
         Order order = orderServices.getOrder(orderId);
         map.put("order", order);
         map.put("product", productServices.getProduct(order.getProSupplierId()));
+        map.put("supplyUser", userServices.getUserById(order.getUserSupplierId()));
+        map.put("buyUser", userServices.getUserById(order.getUserBuyerId()));
+        map.put("user", userServices.getCurrentUser());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd hh-mm-ss");
+        map.put("orderTime", format.format(order.getOrderTime()));
+        map.put("payTime", order.getPayTime() == 0 ? "0" : format.format(order.getPayTime()));
+        map.put("finishTime", order.getFinishTime() == 0 ? "0" : format.format(order.getFinishTime()));
         return "order_details";
     }
 }
