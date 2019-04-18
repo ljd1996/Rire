@@ -9,6 +9,8 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +20,16 @@ import java.util.List;
 
 @SpringBootApplication
 @MapperScan("com.hearing.rire.dao")
-public class RireApplication {
+public class RireApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(RireApplication.class, args);
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(
+            SpringApplicationBuilder builder) {
+        return builder.sources(this.getClass());
     }
 
     private static void genBean() throws IOException, XMLParserException,
