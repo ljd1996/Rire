@@ -1,6 +1,5 @@
 package com.hearing.rire.controller;
 
-import com.hearing.rire.bean.BidList;
 import com.hearing.rire.bean.Order;
 import com.hearing.rire.bean.Product;
 import com.hearing.rire.bean.User;
@@ -233,5 +232,20 @@ public class HttpController {
         map.put("payTime", order.getPayTime() == 0 ? "0" : format.format(order.getPayTime()));
         map.put("finishTime", order.getFinishTime() == 0 ? "0" : format.format(order.getFinishTime()));
         return "order_details";
+    }
+
+    @GetMapping("/delete_order")
+    public String deleteOrder(@RequestParam("id") Integer id) {
+        orderServices.deleteOrder(id);
+        return "index";
+    }
+
+    @GetMapping("/my_contract")
+    public String myContract(Map<String, Object> map) {
+        List<Order> orders = orderServices.getMyOrder(userServices.getCurrentUser().getId());
+        map.put("orders", orders);
+        map.put("products", orderServices.getProductsByOrders(orders));
+        map.put("user", userServices.getCurrentUser());
+        return "my_contract";
     }
 }

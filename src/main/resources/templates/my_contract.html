@@ -1,0 +1,251 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>我的合同</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{img/favicon.ico}">
+    <link rel="apple-touch-icon" th:href="@{apple-touch-icon.png}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/animate.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/font-awesome.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/pe-icon-7-stroke.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/meanmenu.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/magnific-popup.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/slick.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/camera.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/jquery-ui.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/responsive.css}">
+
+    <script type="text/javascript" th:src="@{js/vendor/modernizr-2.8.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/vendor/jquery-1.12.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/camera.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/jquery.easing.1.3.js}"></script>
+    <script type="text/javascript" th:src="@{js/slick.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/jquery-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/magnific-popup.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/countdown.js}"></script>
+    <script type="text/javascript" th:src="@{js/jquery.meanmenu.js}"></script>
+    <script type="text/javascript" th:src="@{js/plugins.js}"></script>
+    <script type="text/javascript" th:src="@{js/map-script.js}"></script>
+    <script type="text/javascript" th:src="@{js/main.js}"></script>
+    <script type="text/javascript" th:src="@{js/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{js/jquery.backstretch.min.js}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                url: "current_user",
+                type: "GET",
+                success: function (result) {
+                    if (result.name != null) {
+                        $('#account_item_login').hide();
+                        $('#account_item_logined').show().text(result.name);
+                        $('#account_item_release').show();
+                        $('#account_item_sell').show();
+                        $('#account_item_buy').show();
+                        $('#account_item_order').show();
+                        $('#account_item_contract').show();
+                        $('#account_item_logout').show();
+                    } else {
+                        $('#account_item_login').show();
+                        $('#account_item_logined').hide();
+                        $('#account_item_release').hide();
+                        $('#account_item_sell').hide();
+                        $('#account_item_buy').hide();
+                        $('#account_item_order').hide();
+                        $('#account_item_contract').hide();
+                        $('#account_item_logout').hide();
+                    }
+                }
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+<header>
+    <div id="sticky-menu" class="header-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 header-bottom-bg">
+                    <div class="logo floatleft">
+                        <a href="index">
+                            <img src="img/logo.png" alt="Rire"/>
+                        </a>
+                    </div>
+                    <div class="mainmenu text-center floatleft">
+                        <nav>
+                            <ul>
+                                <li><a href="index">主页</a></li>
+                                <li>
+                                    <a href="product?type=0&proType=goods">商品</a>
+                                    <ul>
+                                        <li>
+                                            <a href="product?type=0&proType=TypeA">TypeA</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=0&proType=TypeB">TypeB</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=0&proType=TypeC">TypeC</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=0&proType=TypeD">TypeD</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=0&proType=TypeE">TypeE</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=0&proType=TypeF">TypeF</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=0&proType=TypeG">TypeG</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="product?type=1&proType=demand">发布</a>
+                                    <ul>
+                                        <li>
+                                            <a href="product?type=1&proType=TypeA">TypeA</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=1&proType=TypeB">TypeB</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=1&proType=TypeC">TypeC</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=1&proType=TypeD">TypeD</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=1&proType=TypeE">TypeE</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=1&proType=TypeF">TypeF</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=1&proType=TypeG">TypeG</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">账户</a>
+                                    <ul>
+                                        <li>
+                                            <a href="login" id="account_item_login">登录</a>
+                                        </li>
+                                        <li>
+                                            <a href="myself" id="account_item_logined">已登录</a>
+                                        </li>
+                                        <li>
+                                            <a href="release?productId=-1" id="account_item_release">发布</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=0&proType=mygoods" id="account_item_sell">我的商品</a>
+                                        </li>
+                                        <li>
+                                            <a href="product?type=0&proType=mydemand" id="account_item_buy">我的需求</a>
+                                        </li>
+                                        <li>
+                                            <a href="my_order" id="account_item_order">我的订单</a>
+                                        </li>
+                                        <li>
+                                            <a href="my_contract" id="account_item_contract">我的合同</a>
+                                        </li>
+                                        <li>
+                                            <a href="logout" id="account_item_logout">退出登录</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div class="logo floatright">
+                        <a href="index">Rire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="page-banner">
+    <img src="img/slider/bg3.jpg" alt="Page Banner"/>
+</div>
+
+<section class="product-content section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="tab-content">
+                <div class="tab-pane fade in active text-center" id="grid">
+                    <div class="single-products" th:each="item,itemStat : ${orders}">
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="product-item margin40">
+                                <div class="pro-img">
+                                    <a th:href="${'order_details?orderId='+item.getId().intValue()}">
+                                        <img th:src="${'image/'+products.get(itemStat.index).getImage().substring(products.get(itemStat.index).getImage().lastIndexOf('/')+1)}"
+                                             alt="Product"
+                                             style="width: 100%;height: 320px;object-fit: cover"/>
+                                    </a>
+                                    <div class="tag-n-s">
+                                        <span th:text="${user.getId()==item.getUserBuyerId()?'我是买家':'我是卖家'}"></span>
+                                    </div>
+                                    <div class="tag-n-s" style="width: 72px; margin-left: 80px">
+                                        <span th:if="${item.getStatus()==0}">合同待确认</span>
+                                        <span th:if="${item.getStatus()==1}">合同确认</span>
+                                        <span th:if="${item.getStatus()==2}">已支付待发货</span>
+                                        <span th:if="${item.getStatus()==3}">已发货</span>
+                                        <span th:if="${item.getStatus()==4}">已收货</span>
+                                        <span th:if="${item.getStatus()==5}">退款中</span>
+                                        <span th:if="${item.getStatus()==6}">退款退货中</span>
+                                        <span th:if="${item.getStatus()==7}">已取消</span>
+                                    </div>
+                                </div>
+                                <div class="product-title">
+                                    <a th:href="${'order_details?orderId='+item.getId().intValue()}"><h5
+                                            th:text="'订单信息:'+${products.get(itemStat.index).getName()}"></h5></a>
+                                    <span th:text="${' '+products.get(itemStat.index).getProType()}"></span>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <a th:href="${'image/'+item.getLocation().substring(item.getLocation().lastIndexOf('/')+1)}">
+                                        <p th:text="'合同:'+${item.getLocation().substring(item.getLocation().lastIndexOf('/')+1)}"></p>
+                                    </a>
+                                </div>
+                                <div class="col-sm-12">
+                                    <button class="center-block submit-text btn btn-default btn-lg active" role="button">
+                                        <a th:href="${'image/'+item.getLocation().substring(item.getLocation().lastIndexOf('/')+1)}"
+                                           th:download="${item.getLocation().substring(item.getLocation().lastIndexOf('/')+1)}">
+                                            下载合同
+                                        </a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer>
+    <div class="footer-logo-text padding-close">
+        <div class="container text-center">
+            <a href="index"><img src="img/logo2.png" alt="Logo"/></a>
+            <p>Wish you happy every day hhh.</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

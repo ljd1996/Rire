@@ -313,28 +313,28 @@
                         </a>
                     </button>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" th:if="${user.getId()==order.getUserSupplierId()&&order.getStatus()==0}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'1'+'\');'">
                             确认合同
                         </a>
                     </button>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" th:if="${user.getId()==order.getUserBuyerId()&&order.getStatus()==1}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'2'+'\');'">
                             支付
                         </a>
                     </button>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" th:if="${user.getId()==order.getUserSupplierId()&&order.getStatus()==2}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'3'+'\');'">
                             确认发货
                         </a>
                     </button>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" th:if="${user.getId()==order.getUserBuyerId()&&order.getStatus()==3}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'4'+'\');'">
                             确认收货
@@ -342,28 +342,28 @@
                     </button>
                 </div>
 
-                <div class="col-sm-2">
+                <div class="col-sm-2" th:if="${user.getId()==order.getUserBuyerId()&&(order.getStatus()==0||order.getStatus()==1)}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'7'+'\');'">
                             取消订单
                         </a>
                     </button>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" th:if="${user.getId()==order.getUserBuyerId()&&(order.getStatus()==2||order.getStatus()==3)}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'5'+'\');'">
                             仅退款申请
                         </a>
                     </button>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" th:if="${user.getId()==order.getUserBuyerId()&&(order.getStatus()==4||order.getStatus()==3)}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'6'+'\');'">
                             退款退货申请
                         </a>
                     </button>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" th:if="${user.getId()==order.getUserSupplierId()&&(order.getStatus()==5||order.getStatus()==6)}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'7'+'\');'">
                             同意退款

@@ -1,12 +1,14 @@
 package com.hearing.rire.controller;
 
 import com.hearing.rire.bean.BidList;
+import com.hearing.rire.bean.Order;
 import com.hearing.rire.bean.Product;
 import com.hearing.rire.bean.User;
 import com.hearing.rire.service.BidListServices;
 import com.hearing.rire.service.OrderServices;
 import com.hearing.rire.service.ProductServices;
 import com.hearing.rire.service.UserServices;
+import com.hearing.rire.util.Constant;
 import com.hearing.rire.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -59,6 +60,15 @@ public class JsonController {
 
     @GetMapping("/set_order_status")
     public Msg setOrderStatus(@RequestParam("id") int id, @RequestParam("status") int status) {
+        Order order = orderServices.getOrder(id);
+        switch (status) {
+            case Constant.ORDER_STATUS_CONTRACT_GOODS:
+                productServices.updateProductStatus(order.getProSupplierId(), Constant.PRO_STATUS_SELLED);
+                break;
+            case Constant.ORDER_STATUS_CONTRACT_CANCEL:
+                productServices.updateProductStatus(order.getProSupplierId(), Constant.PRO_STATUS_ON);
+                break;
+        }
         return orderServices.updateOrderStatus(id, status);
     }
 }

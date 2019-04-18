@@ -33,6 +33,10 @@ public class OrderServices {
         return orderMapper.selectByPrimaryKey(id);
     }
 
+    public Msg deleteOrder(int id) {
+        return Msg.response(orderMapper.deleteByPrimaryKey(id) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
+    }
+
     public List<Order> getMyOrder(int userId) {
         OrderExample example = new OrderExample();
         OrderExample.Criteria criteria = example.createCriteria();
