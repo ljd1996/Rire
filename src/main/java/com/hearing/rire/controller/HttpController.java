@@ -8,6 +8,7 @@ import com.hearing.rire.service.OrderServices;
 import com.hearing.rire.service.ProductServices;
 import com.hearing.rire.service.UserServices;
 import com.hearing.rire.util.Constant;
+import com.hearing.rire.util.Msg;
 import com.hearing.rire.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -127,9 +128,15 @@ public class HttpController {
     }
 
     @PostMapping("/register")
-    public String register(User user) {
+    public String register(Map<String, Msg> map, User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userServices.register(user);
+        try {
+            map.put("msg", userServices.register(user));
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("msg", Msg.response(Msg.CODE_FAIL, "该账户或手机号已被注册！"));
+            return "login";
+        }
         return "index";
     }
 

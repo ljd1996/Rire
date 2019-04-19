@@ -44,7 +44,7 @@ public class UserServices {
         return Msg.response(userMapper.updateByExampleSelective(user, userExample) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
-    public Msg register(User user) {
+    public Msg register(User user) throws Exception {
         return Msg.response(userMapper.insert(user) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
