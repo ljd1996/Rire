@@ -65,7 +65,31 @@
                     }
                 }
             });
+
+            $('#chooseContract').on('change', function () {
+                handle(this);
+            });
         });
+
+        function handle(f) {
+            var filePath = $(f).val();
+            var ext = filePath.match(/\.([^.]+)$/)[1];
+
+            switch (ext) {
+                case 'pdf':
+                case 'PDF':
+                    break;
+                default:
+                    alert('请上传PDF类型！');
+                    $(f).val(null);
+                    break;
+            }
+            var size = f.files[0].size;
+            if (size > 1024000) {
+                alert('请上传小于1M的文件！');
+                $(f).val(null);
+            }
+        }
 
         function bid(mainid) {
             var v = $('#bid_select').val();
@@ -312,7 +336,7 @@
                     <form method="post" action="upload_contract"
                           enctype="multipart/form-data">
                         <input hidden="hidden" name="productId" th:value="${product.getId()}">
-                        <input type="file" id="chooseContract" name="contract">
+                        <input type="file" id="chooseContract" name="contract" required="required">
                         <div class="submit-text btn btn-default btn-lg active">
                             <input type="submit" name="submit" value="购买"/>
                         </div>

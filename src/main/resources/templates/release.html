@@ -68,33 +68,60 @@
 
 
             $('#chooseImage1').on('change', function () {
-                var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
-                    fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
-                    src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
-
-                // 检查是否是图片
-                if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
-                    error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
-                    return;
+                var src = handle(this);
+                if (src == null) {
+                    $(this).val(null);
                 }
 
                 $('#cropedBigImg1').attr('src', src);
             });
 
             $('#chooseImage2').on('change', function () {
-                var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
-                    fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
-                    src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
-
-                // 检查是否是图片
-                if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
-                    error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
-                    return;
+                var src = handle(this);
+                if (src == null) {
+                    $(this).val(null);
                 }
 
                 $('#cropedBigImg2').attr('src', src);
             });
         });
+
+        function handle(img) {
+            var filePath = $(img).val();
+            var ext = filePath.match(/\.([^.]+)$/)[1];
+            var src = window.URL.createObjectURL(img.files[0]); //转成可以在本地预览的格式
+
+            switch (ext) {
+                case 'jpg':
+                case 'JPG':
+                case 'jpeg':
+                case 'JPEG':
+                case 'png':
+                case 'PNG':
+                    break;
+                default:
+                    alert('请上传图片类型！');
+                    src = null;
+                    break;
+            }
+            var size = img.files[0].size;
+            if (size > 1024000) {
+                alert('请上传小于1M的图片！');
+                src = null;
+            }
+            return src;
+        }
+
+        function clearNoNum(obj) {
+            //先把非数字的都替换掉，除了数字和.
+            obj.value = obj.value.replace(/[^\d.]/g, "");
+            //必须保证第一个为数字而不是.
+            obj.value = obj.value.replace(/^\./g, "");
+            //保证只有出现一个.而没有多个.
+            obj.value = obj.value.replace(/\.{2,}/g, ".");
+            //保证.只出现一次，而不能出现两次以上
+            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+        }
 
     </script>
 </head>
@@ -222,7 +249,8 @@
                               method="post">
                             <div class="col-sm-6">
                                 <div class="input-text">
-                                    <input type="text" name="name" placeholder="商品名称"/>
+                                    <input type="text" name="name" placeholder="商品名称" required="required"
+                                           maxlength="100"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -245,19 +273,21 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="input-text">
-                                    <input type="text" name="price" placeholder="商品价格"/>
+                                    <input type="text" name="price" placeholder="商品价格" required="required"
+                                           onkeyup="clearNoNum(this)"/>
                                 </div>
                             </div>
 
                             <div class="col-xs-8">
                                 <div class="input-text">
                                     <textarea name="description" placeholder="描述"
-                                              rows="5"></textarea>
+                                              rows="5" required="required"
+                                              maxlength="120"></textarea>
                                 </div>
                             </div>
                             <div class="col-xs-4">
-                                <input type="file" id="chooseImage1" name="file">
-                                <img id="cropedBigImg1" alt="lorem ipsum dolor sit"
+                                <input type="file" id="chooseImage1" name="file" required="required">
+                                <img id="cropedBigImg1" alt="图片背景"
                                      data-address=''
                                      title="自定义背景"/>
                             </div>
@@ -275,7 +305,7 @@
                             <div class="col-sm-6">
                                 <div class="input-text">
                                     <input th:value="${product.getName()}" type="text"
-                                           name="name"/>
+                                           name="name" required="required"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -299,7 +329,8 @@
                             <div class="col-sm-6">
                                 <div class="input-text">
                                     <input type="text" name="price"
-                                           th:value="${product.getPrice()}"/>
+                                           th:value="${product.getPrice()}" required="required"
+                                           onkeyup="clearNoNum(this)"/>
                                 </div>
                             </div>
 
@@ -307,12 +338,13 @@
                                 <div class="input-text">
                                     <textarea name="description"
                                               th:text="${product.getDescription()}"
-                                              rows="5"></textarea>
+                                              rows="5" required="required"
+                                              maxlength="120"></textarea>
                                 </div>
                             </div>
                             <div class="col-xs-4">
-                                <input type="file" id="chooseImage2" name="file">
-                                <img id="cropedBigImg2" alt="lorem ipsum dolor sit"
+                                <input type="file" id="chooseImage2" name="file" required="required">
+                                <img id="cropedBigImg2" alt="图片背景"
                                      title="自定义背景"
                                      th:src="${'image/'+product.getImage().substring(product.getImage().lastIndexOf('/')+1)}"/>
                             </div>

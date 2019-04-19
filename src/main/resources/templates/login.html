@@ -199,13 +199,13 @@
                                 <div class="col-xs-12">
                                     <label>用户名:</label>
                                     <div class="input-text">
-                                        <input type="text" name="name"/>
+                                        <input type="text" name="name" required="required"/>
                                     </div>
                                 </div>
                                 <div class="col-xs-12">
                                     <label>密码:</label>
                                     <div class="input-text">
-                                        <input type="password" name="password"/>
+                                        <input type="password" name="password" required="required"/>
                                     </div>
                                 </div>
                                 <div class="col-xs-12">
@@ -230,25 +230,28 @@
                             <div class="col-sm-6">
                                 <label>用户名:</label>
                                 <div class="input-text">
-                                    <input type="text" name="name"/>
+                                    <input type="text" name="name" required="required"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <label>密码:</label>
                                 <div class="input-text">
-                                    <input type="text" name="password"/>
+                                    <input type="password" name="password" required="required"/>
                                 </div>
                             </div>
                             <div class="col-xs-12">
                                 <label>手机号:</label>
                                 <div class="input-text">
-                                    <input type="text" name="phone"/>
+                                    <input type="text" name="phone" required="required"
+                                           oninput = "value=value.replace(/[^\d]/g,'')"
+                                           maxlength="11"/>
                                 </div>
                             </div>
                             <div class="col-xs-12">
                                 <label>地址:</label>
                                 <div class="input-text">
-                                    <input type="text" name="address"/>
+                                    <input type="text" name="address" required="required"
+                                    maxlength="100"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -262,7 +265,8 @@
                             <div class="col-sm-6">
                                 <label>公司:</label>
                                 <div class="input-text">
-                                    <input type="text" name="company" placeholder="个人用户不填！" />
+                                    <input type="text" name="company" placeholder="个人用户不填！"
+                                    maxlength="100"/>
                                 </div>
                             </div>
                             <div class="col-xs-12">

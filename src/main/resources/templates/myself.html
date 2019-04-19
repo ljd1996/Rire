@@ -227,7 +227,7 @@
                             <div class="col-sm-6">
                                 <label>用户名:</label>
                                 <div class="input-text">
-                                    <input type="text" name="name" th:value="${user.getName()}"/>
+                                    <input type="text" name="name" th:value="${user.getName()}" required="required"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -239,13 +239,16 @@
                             <div class="col-xs-12">
                                 <label>手机号:</label>
                                 <div class="input-text">
-                                    <input type="text" name="phone" th:value="${user.getPhone()}"/>
+                                    <input type="text" name="phone" th:value="${user.getPhone()}"
+                                           oninput = "value=value.replace(/[^\d]/g,'')"
+                                           maxlength="11" required="required"/>
                                 </div>
                             </div>
                             <div class="col-xs-12">
                                 <label>地址:</label>
                                 <div class="input-text">
-                                    <input type="text" name="address" th:value="${user.getAddress()}"/>
+                                    <input type="text" name="address"
+                                           maxlength="100" th:value="${user.getAddress()}" required="required"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -259,7 +262,8 @@
                             <div class="col-sm-6">
                                 <label>公司:</label>
                                 <div class="input-text">
-                                    <input type="text" name="company" th:value="${user.getCompany()}" placeholder="个人用户不填！"/>
+                                    <input type="text" name="company"
+                                           maxlength="100" th:value="${user.getCompany()}" placeholder="个人用户不填！"/>
                                 </div>
                             </div>
                             <div class="col-xs-12">

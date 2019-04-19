@@ -13,7 +13,13 @@ import java.util.Date;
  */
 public class Utils {
     public static String getResPath() {
-        return ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/file/";
+        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/file/";
+        File f = new File(path);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        System.out.println("path = " + path);
+        return path;
     }
 
     public static String getImgPath(MultipartFile file) throws IOException {
