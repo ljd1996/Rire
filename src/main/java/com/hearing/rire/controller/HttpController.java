@@ -135,9 +135,14 @@ public class HttpController {
         } catch (Exception e) {
             e.printStackTrace();
             map.put("msg", Msg.response(Msg.CODE_FAIL, "该账户或手机号已被注册！"));
-            return "login";
+            return "register";
         }
-        return "index";
+        return "login";
+    }
+
+    @GetMapping("/register_page")
+    public String registerPage() {
+        return "register";
     }
 
     @GetMapping("/release")
@@ -189,7 +194,8 @@ public class HttpController {
     }
 
     @PostMapping("/upload_contract")
-    public String uploadContract(@RequestParam("productId") Integer productId,
+    public String uploadContract(Map<String, String> map,
+                                 @RequestParam("productId") Integer productId,
                                  @RequestParam("contract") MultipartFile contract) {
         try {
             String filePath = Utils.getImgPath(contract);
@@ -214,7 +220,8 @@ public class HttpController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "index";
+        map.put("msg", "你有新的订单！");
+        return "order";
     }
 
     @GetMapping("/my_order")

@@ -16,6 +16,9 @@ public class Constant {
     public static final String TYPE_F = "TypeF";
     public static final String TYPE_G = "TypeG";
 
+    public static final int PRO_TYPE_GOODS = 0;
+    public static final int PRO_TYPE_DEMAND = 1;
+
     public static final int PRO_STATUS_ON = 0;
     public static final int PRO_STATUS_OFF = 1;
     public static final int PRO_STATUS_SELLED = 2;

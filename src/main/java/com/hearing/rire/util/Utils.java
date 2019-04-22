@@ -14,6 +14,7 @@ import java.util.Date;
 public class Utils {
     public static String getResPath() {
         String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/file/";
+//        String path = "/root/static/file/";
         File f = new File(path);
         if (!f.exists()) {
             f.mkdirs();

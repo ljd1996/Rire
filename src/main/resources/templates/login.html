@@ -45,7 +45,7 @@
                 type: "GET",
                 success: function (result) {
                     if (result.name != null) {
-                        $('#account_item_login').hide();
+                        $('#account_item_login').hide();                         $('#account').text(result.name).attr('href', 'myself');
                         $('#account_item_logined').show().text(result.name);
                         $('#account_item_release').show();
                         $('#account_item_sell').show();
@@ -137,7 +137,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="#">账户</a>
+                                <li><a href="#" id="account">账户</a>
                                     <ul>
                                         <li>
                                             <a href="login" id="account_item_login">登录</a>
@@ -185,7 +185,7 @@
 <section class="login-page section-padding">
     <div class="container">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="row">
                     <div class="single-check">
                         <form action="loginConfirm" method="post">
@@ -193,7 +193,8 @@
                                 <div class="col-xs-12">
                                     <div class="check-title">
                                         <h3>登录</h3>
-                                        <p>如果已有账号，请登录!</p>
+                                        <h4 th:if="${msg==null}">如果已有账号，请登录!</h4>
+                                        <h4 th:if="${msg!=null}" style="color: #761c19">注册成功，请登录!</h4>
                                     </div>
                                 </div>
                                 <div class="col-xs-12">
@@ -208,79 +209,17 @@
                                         <input type="password" name="password" required="required"/>
                                     </div>
                                 </div>
-                                <div class="col-xs-12">
+                                <div class="col-xs-6">
                                     <div class="submit-text">
                                         <input type="submit" name="submit" value="登录">
                                     </div>
                                 </div>
+                                <div class="col-xs-2">
+                                    <a href="register_page">还没账号?去注册</a>
+                                </div>
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="single-input p-bottom50 clearfix">
-                    <form action="register" method="post">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="check-title">
-                                    <h3>注册</h3>
-                                </div>
-                            </div>
-                            <div class="col-xs-12" th:if="${msg!=null}">
-                                <div class="check-title">
-                                    <h4 th:text="${msg.getMsg()}" style="color: #843534"></h4>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>用户名:</label>
-                                <div class="input-text">
-                                    <input type="text" name="name" required="required"/>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>密码:</label>
-                                <div class="input-text">
-                                    <input type="password" name="password" required="required"/>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <label>手机号:</label>
-                                <div class="input-text">
-                                    <input type="text" name="phone" required="required"
-                                           oninput="value=value.replace(/[^\d]/g,'')"
-                                           maxlength="11"/>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <label>地址:</label>
-                                <div class="input-text">
-                                    <input type="text" name="address" required="required"
-                                           maxlength="100"/>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>账户类型:</label>
-                                <br>
-                                <select name="type" id="selecte" class="shortselect">
-                                    <option value="0" selected="selected">个人</option>
-                                    <option value="1">公司</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>公司:</label>
-                                <div class="input-text">
-                                    <input type="text" name="company" placeholder="个人用户不填！"
-                                           maxlength="100"/>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="submit-text">
-                                    <input type="submit" name="submit" value="注册">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

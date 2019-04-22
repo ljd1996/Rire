@@ -45,7 +45,7 @@
                 type: "GET",
                 success: function (result) {
                     if (result.name != null) {
-                        $('#account_item_login').hide();
+                        $('#account_item_login').hide();                         $('#account').text(result.name).attr('href', 'myself');
                         $('#account_item_logined').show().text(result.name);
                         $('#account_item_release').show();
                         $('#account_item_sell').show();
@@ -101,6 +101,7 @@
                     type: "POST",
                     data: "mainid=" + mainid + "&followid=" + v,
                     success: function (result) {
+                        alert("出价成功！");
                         location.reload(true);
                     }
                 });
@@ -113,6 +114,7 @@
                 type: "GET",
                 data: "id=" + id + "&status=" + status,
                 success: function (result) {
+                    alert("操作成功！");
                     location.reload(true);
                 }
             });
@@ -187,7 +189,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="#">账户</a>
+                                <li><a href="#" id="account">账户</a>
                                     <ul>
                                         <li>
                                             <a href="login" id="account_item_login">登录</a>

@@ -1,0 +1,5 @@
+Picked up _JAVA_OPTIONS:   -Dawt.useSystemAAFontSettings=gasp
+
+(java:3717): Gtk-WARNING **: 17:54:55.960: 无法在模块路径中找到主题引擎：“adwaita”，
+
+(java:3717): Gtk-WARNING **: 17:54:55.961: 无法在模块路径中找到主题引擎：“adwaita”，
