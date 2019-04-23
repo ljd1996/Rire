@@ -16,6 +16,8 @@ public interface ProductMapper {
 
     int insertSelective(Product record);
 
+    long insertAndGetId(Product product);
+
     List<Product> selectByExample(ProductExample example);
 
     Product selectByPrimaryKey(Integer id);

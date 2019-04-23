@@ -45,7 +45,7 @@ public class UserServices {
     }
 
     public Msg register(User user) throws Exception {
-        return Msg.response(userMapper.insert(user) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
+        return Msg.response(userMapper.insert(user) > 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
     public Msg login(String name, String password) {

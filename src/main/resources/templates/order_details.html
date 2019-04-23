@@ -45,7 +45,8 @@
                 type: "GET",
                 success: function (result) {
                     if (result.name != null) {
-                        $('#account_item_login').hide();                         $('#account').text(result.name).attr('href', 'myself');
+                        $('#account_item_login').hide();
+                        $('#account').text(result.name).attr('href', 'myself');
                         $('#account_item_logined').show().text(result.name);
                         $('#account_item_release').show();
                         $('#account_item_sell').show();
@@ -73,6 +74,7 @@
                 type: "GET",
                 data: "id=" + id + "&status=" + status,
                 success: function (result) {
+                    alert('操作成功！');
                     location.reload(true);
                 }
             });
@@ -342,31 +344,42 @@
                     </button>
                 </div>
 
-                <div class="col-sm-2" th:if="${user.getId()==order.getUserBuyerId()&&(order.getStatus()==0||order.getStatus()==1)}">
+                <div class="col-sm-2"
+                     th:if="${user.getId()==order.getUserBuyerId()&&(order.getStatus()==0||order.getStatus()==1)}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'7'+'\');'">
                             取消订单
                         </a>
                     </button>
                 </div>
-                <div class="col-sm-2" th:if="${user.getId()==order.getUserBuyerId()&&(order.getStatus()==2||order.getStatus()==3)}">
+                <div class="col-sm-2"
+                     th:if="${user.getId()==order.getUserBuyerId()&&(order.getStatus()==2||order.getStatus()==3)}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'5'+'\');'">
                             仅退款申请
                         </a>
                     </button>
                 </div>
-                <div class="col-sm-2" th:if="${user.getId()==order.getUserBuyerId()&&(order.getStatus()==4||order.getStatus()==3)}">
+                <div class="col-sm-2"
+                     th:if="${user.getId()==order.getUserBuyerId()&&(order.getStatus()==4||order.getStatus()==3)}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'6'+'\');'">
                             退款退货申请
                         </a>
                     </button>
                 </div>
-                <div class="col-sm-2" th:if="${user.getId()==order.getUserSupplierId()&&(order.getStatus()==5||order.getStatus()==6)}">
+                <div class="col-sm-2"
+                     th:if="${user.getId()==order.getUserSupplierId()&&(order.getStatus()==5||order.getStatus()==6)}">
                     <button class="submit-text btn btn-default btn-lg active" role="button">
                         <a th:onclick="'javascript:setStatus(\''+${order.getId()}+'\',\''+'7'+'\');'">
                             同意退款
+                        </a>
+                    </button>
+                </div>
+                <div class="col-sm-2" th:if="${(order.getStatus()==4||order.getStatus()==7)}">
+                    <button class="submit-text btn btn-default btn-lg active" role="button">
+                        <a th:href="${'delete_order?id='+order.getId()}">
+                            删除订单
                         </a>
                     </button>
                 </div>

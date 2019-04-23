@@ -35,7 +35,7 @@ public class ProductServices {
     }
 
     public Msg addProduct(Product product) {
-        return Msg.response(productMapper.insert(product) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
+        return Msg.response(productMapper.insertAndGetId(product) > 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL).add("productId", product.getId());
     }
 
     public List<Product> getAllGoods() {

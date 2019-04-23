@@ -180,16 +180,18 @@
 </header>
 
 <div class="page-banner">
-    <img src="img/slider/bg3.jpg" alt="Page Banner"/>
+    <img src="img/bg.jpg" alt="Page Banner"/>
 </div>
-
-<h4 th:text="${msg}" style="color: #761c19"></h4>
 
 <section class="product-content section-padding">
     <div class="container">
         <div class="row">
             <div class="tab-content">
                 <div class="tab-pane fade in active text-center" id="grid">
+                    <div class="col-xs-12" th:if="${orders.size()==0}">
+                        <h3 style="color: #761c19">当前没有任何订单！</h3>
+                    </div>
+
                     <div class="single-products" th:each="item,itemStat : ${orders}">
                         <div class="col-xs-12 col-sm-4">
                             <div class="product-item margin40">

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -110,13 +111,19 @@ public class HttpController {
     }
 
     @GetMapping("/delete_product")
-    public String deleteProduct(@RequestParam("id") Integer id) {
+    public void deleteProduct(HttpServletResponse response, @RequestParam("id") Integer id) {
+        Product product = productServices.getProduct(id);
         productServices.deleteProduct(id);
-        return "index";
+        try {
+            response.sendRedirect("product?type=" + product.getType() + "&proType=" +
+                    (product.getType() == Constant.PRO_TYPE_GOODS ? Constant.TYPE_MY_GOODS : Constant.TYPE_MY_Demand));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @PostMapping("/updateUser")
-    public String updateUser(User user) {
+    public void updateUser(HttpServletResponse response, Map<String, String> map, User user) {
         if (user.getPassword().isEmpty()) {
             user.setPassword(userServices.getCurrentUser().getPassword());
         } else {
@@ -124,20 +131,31 @@ public class HttpController {
         }
         userServices.update(user);
         SecurityContextHolder.getContext().setAuthentication(null);
-        return "index";
+        try {
+            response.sendRedirect("myself");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @PostMapping("/register")
-    public String register(Map<String, Msg> map, User user) {
+    public String register(Map<String, String> map, User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        boolean success = false;
         try {
-            map.put("msg", userServices.register(user));
+            if (userServices.register(user).getCode() == Msg.CODE_SUCCESS) {
+                success = true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            map.put("msg", Msg.response(Msg.CODE_FAIL, "该账户或手机号已被注册！"));
-            return "register";
         }
-        return "login";
+        if (!success) {
+            map.put("msg", "该账户或手机号已被注册！");
+            return "register";
+        } else {
+            map.put("msg", "注册成功，请登录!");
+            return "login";
+        }
     }
 
     @GetMapping("/register_page")
@@ -154,8 +172,8 @@ public class HttpController {
     }
 
     @PostMapping("/releaseAction")
-    public String uploadArticle(Product product,
-                                @RequestParam(value = "file", required = false) MultipartFile file) {
+    public void uploadArticle(HttpServletResponse response, Product product,
+                              @RequestParam(value = "file", required = false) MultipartFile file) {
         try {
             String filePath = Utils.getImgPath(file);
             if (filePath != null) {
@@ -166,16 +184,16 @@ public class HttpController {
             product.setTime(new Date().getTime());
             product.setUserId(userServices.getCurrentUser().getId());
 
-            productServices.addProduct(product);
+            Msg msg = productServices.addProduct(product);
+            response.sendRedirect("product_details?productId=" + msg.getExtend().get("productId"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "index";
     }
 
     @PostMapping("/updateProduct")
-    public String updateProduct(Product product,
-                                @RequestParam(value = "file", required = false) MultipartFile file) {
+    public void updateProduct(HttpServletResponse response, Product product,
+                              @RequestParam(value = "file", required = false) MultipartFile file) {
         try {
             String filePath = Utils.getImgPath(file);
             if (filePath != null) {
@@ -187,16 +205,17 @@ public class HttpController {
             product.setUserId(userServices.getCurrentUser().getId());
 
             productServices.updateProduct(product);
+
+            response.sendRedirect("product_details?productId=" + product.getId());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "index";
     }
 
     @PostMapping("/upload_contract")
-    public String uploadContract(Map<String, String> map,
-                                 @RequestParam("productId") Integer productId,
-                                 @RequestParam("contract") MultipartFile contract) {
+    public void uploadContract(HttpServletResponse response, Map<String, String> map,
+                               @RequestParam("productId") Integer productId,
+                               @RequestParam("contract") MultipartFile contract) {
         try {
             String filePath = Utils.getImgPath(contract);
             if (filePath != null) {
@@ -212,16 +231,16 @@ public class HttpController {
                 order.setUserSupplierId(product.getUserId());
                 order.setUserBuyerId(userServices.getCurrentUser().getId());
 
-                orderServices.addOrder(order);
+                Msg msg = orderServices.addOrder(order);
 
                 product.setStatus(Constant.PRO_STATUS_LOCKED);
                 productServices.updateProductStatus(productId, Constant.PRO_STATUS_LOCKED);
+
+                response.sendRedirect("order_details?orderId=" + msg.getExtend().get("orderId"));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        map.put("msg", "你有新的订单！");
-        return "order";
     }
 
     @GetMapping("/my_order")
@@ -249,9 +268,13 @@ public class HttpController {
     }
 
     @GetMapping("/delete_order")
-    public String deleteOrder(@RequestParam("id") Integer id) {
+    public void deleteOrder(HttpServletResponse response, @RequestParam("id") Integer id) {
         orderServices.deleteOrder(id);
-        return "index";
+        try {
+            response.sendRedirect("my_order");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @GetMapping("/my_contract")

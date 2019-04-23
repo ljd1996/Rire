@@ -45,7 +45,8 @@
                 type: "GET",
                 success: function (result) {
                     if (result.name != null) {
-                        $('#account_item_login').hide();                         $('#account').text(result.name).attr('href', 'myself');
+                        $('#account_item_login').hide();
+                        $('#account').text(result.name).attr('href', 'myself');
                         $('#account_item_logined').show().text(result.name);
                         $('#account_item_release').show();
                         $('#account_item_sell').show();
@@ -137,7 +138,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="#" id="account">账户</a>
+                                <li><a href="#" id="account" style="color: #761c19">账户</a>
                                     <ul>
                                         <li>
                                             <a href="login" id="account_item_login">登录</a>
@@ -179,7 +180,7 @@
 </header>
 
 <div class="page-banner">
-    <img src="img/slider/bg3.jpg" alt="Page Banner"/>
+    <img src="img/bg.jpg" alt="Page Banner"/>
 </div>
 
 <section class="login-page section-padding">
@@ -194,7 +195,7 @@
                                     <div class="check-title">
                                         <h3>登录</h3>
                                         <h4 th:if="${msg==null}">如果已有账号，请登录!</h4>
-                                        <h4 th:if="${msg!=null}" style="color: #761c19">注册成功，请登录!</h4>
+                                        <h4 th:if="${msg!=null}" th:text="${msg}" style="color: #761c19"></h4>
                                     </div>
                                 </div>
                                 <div class="col-xs-12">

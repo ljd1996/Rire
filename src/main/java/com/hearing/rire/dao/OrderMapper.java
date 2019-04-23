@@ -12,6 +12,8 @@ public interface OrderMapper {
 
     int deleteByPrimaryKey(Integer id);
 
+    int insertAndGetId(Order record);
+
     int insert(Order record);
 
     int insertSelective(Order record);

@@ -45,7 +45,8 @@
                 type: "GET",
                 success: function (result) {
                     if (result.name != null) {
-                        $('#account_item_login').hide();                         $('#account').text(result.name).attr('href', 'myself');
+                        $('#account_item_login').hide();
+                        $('#account').text(result.name).attr('href', 'myself');
                         $('#account_item_logined').show().text(result.name);
                         $('#account_item_release').show();
                         $('#account_item_sell').show();

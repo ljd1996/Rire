@@ -26,7 +26,8 @@ public class OrderServices {
     private ProductMapper productMapper;
 
     public Msg addOrder(Order order) {
-        return Msg.response(orderMapper.insert(order) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
+        return Msg.response(orderMapper.insertAndGetId(order) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL)
+                .add("orderId", order.getId());
     }
 
     public Order getOrder(int id) {

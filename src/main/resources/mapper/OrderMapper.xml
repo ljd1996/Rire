@@ -104,6 +104,16 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="com.hearing.rire.bean.Order">
+    insert into orderlist (id, location, status,
+      user_supplier_id, user_buyer_id, pro_supplier_id,
+      order_time, finish_time, pay_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{location,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{userSupplierId,jdbcType=INTEGER}, #{userBuyerId,jdbcType=INTEGER}, #{proSupplierId,jdbcType=INTEGER},
+      #{orderTime,jdbcType=BIGINT}, #{finishTime,jdbcType=BIGINT}, #{payTime,jdbcType=BIGINT}
+      )
+  </insert>
   <insert id="insert" parameterType="com.hearing.rire.bean.Order">
     insert into orderlist (id, location, status, 
       user_supplier_id, user_buyer_id, pro_supplier_id, 
