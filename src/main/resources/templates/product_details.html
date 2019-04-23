@@ -165,7 +165,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="product?type=1&proType=demand">发布</a>
+                                    <a href="product?type=1&proType=demand">需求</a>
                                     <ul>
                                         <li>
                                             <a href="product?type=1&proType=TypeA">TypeA</a>
@@ -232,7 +232,7 @@
 </header>
 
 <div class="page-banner">
-    <img src="img/slider/bg1.jpg" alt="Page Banner"/>
+    <img src="img/bg.jpg" alt="Page Banner"/>
 </div>
 
 <section class="product-details section-padding-top">
@@ -379,7 +379,7 @@
                                 <span>价格</span>
                                 <p style="text-align: center">商品</p>
                             </li>
-                            <li th:each="item,itemStat:${bidProducts}">
+                            <li th:each="item,itemStat:${bidProducts}" style="overflow: hidden;">
                                 <span th:text="${item.getPrice()}"></span>
                                 <a style="display: block;text-align: center;"
                                    th:href="${'product_details?productId='+item.getId()}"
@@ -395,7 +395,7 @@
                                 <span>价格</span>
                                 <p style="text-align: center">需求</p>
                             </li>
-                            <li th:each="item,itemStat:${bidProducts}">
+                            <li th:each="item,itemStat:${bidProducts}" style="overflow: hidden;">
                                 <span th:text="${item.getPrice()}"></span>
                                 <a style="display: block;text-align: center;"
                                    th:href="${'product_details?productId='+item.getId()}"

@@ -68,7 +68,7 @@ public class HttpController {
     }
 
     @GetMapping("/product")
-    public String product(Map<String, List<Product>> map,
+    public String product(Map<String, Object> map,
                           @RequestParam("type") Integer type, @RequestParam("proType") String proType) {
         switch (proType) {
             case Constant.TYPE_GOODS:
@@ -87,6 +87,8 @@ public class HttpController {
                 map.put("product", type == 0 ? productServices.getGoodsByType(proType) : productServices.getDemandByType(proType));
                 break;
         }
+        // 用来标识处于哪一页面
+        map.put("type", proType + type);
         return "product";
     }
 

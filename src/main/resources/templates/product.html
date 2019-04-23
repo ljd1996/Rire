@@ -45,11 +45,15 @@
                 type: "GET",
                 success: function (result) {
                     if (result.name != null) {
-                        $('#account_item_login').hide();                         $('#account').text(result.name).attr('href', 'myself');
+                        $('#account_item_login').hide();
+                        $('#account1').text(result.name).attr('href', 'myself');
+                        $('#account2').text(result.name).attr('href', 'myself');
                         $('#account_item_logined').show().text(result.name);
                         $('#account_item_release').show();
-                        $('#account_item_sell').show();
-                        $('#account_item_buy').show();
+                        $('#account_item_sell1').show();
+                        $('#account_item_sell2').show();
+                        $('#account_item_buy1').show();
+                        $('#account_item_buy2').show();
                         $('#account_item_order').show();
                         $('#account_item_contract').show();
                         $('#account_item_logout').show();
@@ -57,8 +61,10 @@
                         $('#account_item_login').show();
                         $('#account_item_logined').hide();
                         $('#account_item_release').hide();
-                        $('#account_item_sell').hide();
-                        $('#account_item_buy').hide();
+                        $('#account_item_sell1').hide();
+                        $('#account_item_sell2').hide();
+                        $('#account_item_buy1').hide();
+                        $('#account_item_buy2').hide();
                         $('#account_item_order').hide();
                         $('#account_item_contract').hide();
                         $('#account_item_logout').hide();
@@ -86,58 +92,97 @@
                             <ul>
                                 <li><a href="index">主页</a></li>
                                 <li>
-                                    <a href="product?type=0&proType=goods">商品</a>
+                                    <a th:if="${type.startsWith('goods')||type.matches('Type\w0')}"
+                                       href="product?type=0&proType=goods"
+                                       style="color: #843534">商品</a>
+                                    <a th:if="${!type.startsWith('goods')&&!type.matches('Type\w0')}"
+                                       href="product?type=0&proType=goods">商品</a>
                                     <ul>
                                         <li>
-                                            <a href="product?type=0&proType=TypeA">TypeA</a>
+                                            <a th:if="${type.equals('TypeA0')}" style="color: #843534"
+                                               href="product?type=0&proType=TypeA">TypeA</a>
+                                            <a th:if="${!type.equals('TypeA0')}" href="product?type=0&proType=TypeA">TypeA</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=0&proType=TypeB">TypeB</a>
+                                            <a th:if="${type.equals('TypeB0')}" href="product?type=0&proType=TypeB"
+                                               style="color: #843534">TypeB</a>
+                                            <a th:if="${!type.equals('TypeB0')}" href="product?type=0&proType=TypeB">TypeB</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=0&proType=TypeC">TypeC</a>
+                                            <a th:if="${type.equals('TypeC0')}" href="product?type=0&proType=TypeC"
+                                               style="color: #843534">TypeC</a>
+                                            <a th:if="${!type.equals('TypeC0')}" href="product?type=0&proType=TypeC">TypeC</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=0&proType=TypeD">TypeD</a>
+                                            <a th:if="${type.equals('TypeD0')}" href="product?type=0&proType=TypeD"
+                                               style="color: #843534">TypeD</a>
+                                            <a th:if="${!type.equals('TypeD0')}" href="product?type=0&proType=TypeD">TypeD</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=0&proType=TypeE">TypeE</a>
+                                            <a th:if="${type.equals('TypeE0')}" href="product?type=0&proType=TypeE"
+                                               style="color: #843534">TypeE</a>
+                                            <a th:if="${!type.equals('TypeE0')}" href="product?type=0&proType=TypeE">TypeE</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=0&proType=TypeF">TypeF</a>
+                                            <a th:if="${type.equals('TypeF0')}" href="product?type=0&proType=TypeF"
+                                               style="color: #843534">TypeF</a>
+                                            <a th:if="${!type.equals('TypeF0')}" href="product?type=0&proType=TypeF">TypeF</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=0&proType=TypeG">TypeG</a>
+                                            <a th:if="${type.equals('TypeG0')}" href="product?type=0&proType=TypeG"
+                                               style="color: #843534">TypeG</a>
+                                            <a th:if="${!type.equals('TypeG0')}" href="product?type=0&proType=TypeG">TypeG</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="product?type=1&proType=demand">发布</a>
+                                    <a th:if="${type.startsWith('demand')||type.matches('Type\w1')}"
+                                       href="product?type=1&proType=demand"
+                                       style="color: #843534">需求</a>
+                                    <a th:if="${!type.startsWith('demand')&&!type.matches('Type\w1')}"
+                                       href="product?type=1&proType=demand">需求</a>
                                     <ul>
                                         <li>
-                                            <a href="product?type=1&proType=TypeA">TypeA</a>
+                                            <a th:if="${type.equals('TypeA1')}" href="product?type=1&proType=TypeA"
+                                               style="color: #843534">TypeA</a>
+                                            <a th:if="${!type.equals('TypeA1')}" href="product?type=1&proType=TypeA">TypeA</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=1&proType=TypeB">TypeB</a>
+                                            <a th:if="${type.equals('TypeB1')}" href="product?type=1&proType=TypeB"
+                                               style="color: #843534">TypeB</a>
+                                            <a th:if="${!type.equals('TypeB1')}" href="product?type=1&proType=TypeB">TypeB</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=1&proType=TypeC">TypeC</a>
+                                            <a th:if="${type.equals('TypeC1')}" href="product?type=1&proType=TypeC"
+                                               style="color: #843534">TypeC</a>
+                                            <a th:if="${!type.equals('TypeC1')}" href="product?type=1&proType=TypeC">TypeC</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=1&proType=TypeD">TypeD</a>
+                                            <a th:if="${type.equals('TypeD1')}" href="product?type=1&proType=TypeD"
+                                               style="color: #843534">TypeD</a>
+                                            <a th:if="${!type.equals('TypeD1')}" href="product?type=1&proType=TypeD">TypeD</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=1&proType=TypeE">TypeE</a>
+                                            <a th:if="${type.equals('TypeE1')}" href="product?type=1&proType=TypeE"
+                                               style="color: #843534">TypeE</a>
+                                            <a th:if="${!type.equals('TypeE1')}" href="product?type=1&proType=TypeE">TypeE</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=1&proType=TypeF">TypeF</a>
+                                            <a th:if="${type.equals('TypeF1')}" href="product?type=1&proType=TypeF"
+                                               style="color: #843534">TypeF</a>
+                                            <a th:if="${!type.equals('TypeF1')}" href="product?type=1&proType=TypeF">TypeF</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=1&proType=TypeG">TypeG</a>
+                                            <a th:if="${type.equals('TypeG1')}" href="product?type=1&proType=TypeG"
+                                               style="color: #843534">TypeG</a>
+                                            <a th:if="${!type.equals('TypeG1')}" href="product?type=1&proType=TypeG">TypeG</a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="#" id="account">账户</a>
+                                <li>
+                                    <a href="#" th:if="${type.matches('my\w*')}" id="account1"
+                                       style="color: #843534">账户</a>
+                                    <a href="#" th:if="${!type.matches('my\w*')}" id="account2">账户</a>
                                     <ul>
                                         <li>
                                             <a href="login" id="account_item_login">登录</a>
@@ -149,10 +194,18 @@
                                             <a href="release?productId=-1" id="account_item_release">发布</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=0&proType=mygoods" id="account_item_sell">我的商品</a>
+                                            <a th:if="${type.startsWith('mygoods')}"
+                                               href="product?type=0&proType=mygoods" id="account_item_sell1"
+                                               style="color: #843534">我的商品</a>
+                                            <a th:if="${!type.startsWith('mygoods')}"
+                                               href="product?type=0&proType=mygoods" id="account_item_sell2">我的商品</a>
                                         </li>
                                         <li>
-                                            <a href="product?type=0&proType=mydemand" id="account_item_buy">我的需求</a>
+                                            <a th:if="${type.startsWith('mydemand')}"
+                                               href="product?type=0&proType=mydemand" id="account_item_buy1"
+                                               style="color: #843534">我的需求</a>
+                                            <a th:if="${!type.startsWith('mydemand')}"
+                                               href="product?type=0&proType=mydemand" id="account_item_buy2">我的需求</a>
                                         </li>
                                         <li>
                                             <a href="my_order" id="account_item_order">我的订单</a>
@@ -182,13 +235,37 @@
     <img src="img/bg.jpg" alt="Page Banner"/>
 </div>
 
+<div class="col-xs-12">
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('goods')}">全部商品</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('demand')}">全部需求</h3>
+
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeA0')}">商品分类：TypeA</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeB0')}">商品分类：TypeB</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeC0')}">商品分类：TypeC</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeD0')}">商品分类：TypeD</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeE0')}">商品分类：TypeE</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeF0')}">商品分类：TypeF</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeG0')}">商品分类：TypeG</h3>
+
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeA1')}">需求分类：TypeA</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeB1')}">需求分类：TypeB</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeC1')}">需求分类：TypeC</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeD1')}">需求分类：TypeD</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeE1')}">需求分类：TypeE</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeF1')}">需求分类：TypeF</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeG1')}">需求分类：TypeG</h3>
+
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('mygoods')}">我的商品</h3>
+    <h3 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('mydemand')}">我的需求</h3>
+</div>
+
 <section class="product-content section-padding">
     <div class="container">
         <div class="row">
             <div class="tab-content">
                 <div class="tab-pane fade in active text-center" id="grid">
                     <div class="col-xs-12" th:if="${product.size()==0}">
-                        <h3 style="color: #761c19">当前没有任何商品！</h3>
+                        <h3 style="color: #761c19">当前没有任何发布！</h3>
                     </div>
 
                     <div class="single-products" th:each="item,itemStat : ${product}">

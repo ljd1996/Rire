@@ -45,7 +45,8 @@
                 type: "GET",
                 success: function (result) {
                     if (result.name != null) {
-                        $('#account_item_login').hide();                         $('#account').text(result.name).attr('href', 'myself');
+                        $('#account_item_login').hide();
+                        $('#account').text(result.name).attr('href', 'myself');
                         $('#account_item_logined').show().text(result.name);
                         $('#account_item_release').show();
                         $('#account_item_sell').show();
@@ -112,7 +113,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="product?type=1&proType=demand">发布</a>
+                                    <a href="product?type=1&proType=demand">需求</a>
                                     <ul>
                                         <li>
                                             <a href="product?type=1&proType=TypeA">TypeA</a>
@@ -137,13 +138,13 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="#" id="account">账户</a>
+                                <li><a href="#" id="account" style="color: #761c19">账户</a>
                                     <ul>
                                         <li>
                                             <a href="login" id="account_item_login">登录</a>
                                         </li>
                                         <li>
-                                            <a href="myself" id="account_item_logined">已登录</a>
+                                            <a href="myself" id="account_item_logined" style="color: #761c19">已登录</a>
                                         </li>
                                         <li>
                                             <a href="release?productId=-1" id="account_item_release">发布</a>
@@ -220,7 +221,7 @@
                 <h4>修改个人资料</h4>
             </div>
 
-            <div class="col-sm-12"  style="margin-top: 18px;">
+            <div class="col-sm-12" style="margin-top: 18px;">
                 <div class="single-input p-bottom50 clearfix">
                     <form action="updateUser" method="post">
                         <div class="row">
@@ -240,7 +241,7 @@
                                 <label>手机号:</label>
                                 <div class="input-text">
                                     <input type="text" name="phone" th:value="${user.getPhone()}"
-                                           oninput = "value=value.replace(/[^\d]/g,'')"
+                                           oninput="value=value.replace(/[^\d]/g,'')"
                                            maxlength="11" required="required"/>
                                 </div>
                             </div>
