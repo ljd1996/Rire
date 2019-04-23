@@ -20,4 +20,9 @@ public class ErrorController {
     public String error_500() {
         return "error-500";
     }
+
+    @GetMapping(value = "/")
+    public String error() {
+        return "error";
+    }
 }
