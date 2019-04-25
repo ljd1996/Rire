@@ -185,8 +185,8 @@
 
 <section class="login-page section-padding">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
+        <div class="col-xs-3"></div>
+        <div class="col-xs-6">
                 <div class="single-input p-bottom50 clearfix">
                     <form action="register" method="post">
                         <div class="row">
@@ -200,13 +200,13 @@
                                     <h4 th:text="${msg}" style="color: #843534"></h4>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <label>用户名:</label>
                                 <div class="input-text">
                                     <input type="text" name="name" required="required"/>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <label>密码:</label>
                                 <div class="input-text">
                                     <input type="password" name="password" required="required"/>
@@ -227,7 +227,7 @@
                                            maxlength="100"/>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <label>账户类型:</label>
                                 <br>
                                 <select name="type" id="selecte" class="shortselect">
@@ -235,7 +235,7 @@
                                     <option value="1">公司</option>
                                 </select>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <label>公司:</label>
                                 <div class="input-text">
                                     <input type="text" name="company" placeholder="个人用户不填！"
@@ -247,12 +247,11 @@
                                     <input type="submit" name="submit" value="注册">
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-6">
                                 <a href="login">已有账号?去登录</a>
                             </div>
                         </div>
                     </form>
-                </div>
             </div>
         </div>
     </div>
