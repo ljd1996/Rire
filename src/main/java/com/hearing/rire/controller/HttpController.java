@@ -52,7 +52,15 @@ public class HttpController {
     }
 
     @GetMapping("/index")
-    public String index() {
+    public String index(Map<String, Object> map) {
+        List<Product> goodss = productServices.getAllGoods();
+        List<Product> demands = productServices.getAllDemand();
+
+        Utils.rmBack(goodss, Constant.INDEX_SHOW_NUM);
+        Utils.rmBack(demands, Constant.INDEX_SHOW_NUM);
+
+        map.put("goodss", goodss);
+        map.put("demands", demands);
         return "index";
     }
 

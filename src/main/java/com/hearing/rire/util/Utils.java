@@ -7,14 +7,15 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Create by hearing on 19-4-13
  */
 public class Utils {
     public static String getResPath() {
-        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/file/";
-//        String path = "E:\\lilan\\file\\";
+//        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/file/";
+        String path = "E:/lilan/file/";
         File f = new File(path);
         if (!f.exists()) {
             f.mkdirs();
@@ -42,5 +43,13 @@ public class Utils {
         f.createNewFile();
         file.transferTo(f);
         return filepath + fileName;
+    }
+
+    public static void rmBack(List<?> list, int count) {
+        if (list.size() > count) {
+            for (int i = list.size() - 1; i >= count; i--) {
+                list.remove(i);
+            }
+        }
     }
 }

@@ -16,6 +16,8 @@ public class Constant {
     public static final String TYPE_F = "TypeF";
     public static final String TYPE_G = "TypeG";
 
+    public static final int INDEX_SHOW_NUM = 3;
+
     public static final int PRO_TYPE_GOODS = 0;
     public static final int PRO_TYPE_DEMAND = 1;
 

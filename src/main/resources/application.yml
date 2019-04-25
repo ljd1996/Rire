@@ -10,11 +10,11 @@ spring:
       content-type: text/html
   datasource:
     username: root
-    password: 123456
-#    password: cs123456
+#    password: 123456
+    password: cs123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rire?autoReconnect=true&useSSL=false&nullCatalogMeansCurrent=true&useUnicode=true&characterEncoding=UTF-8
-#    url: jdbc:mysql://101.132.39.95:3306/rire?autoReconnect=true&useSSL=false&nullCatalogMeansCurrent=true&useUnicode=true&characterEncoding=UTF-8
+#    url: jdbc:mysql://localhost:3306/rire?autoReconnect=true&useSSL=false&nullCatalogMeansCurrent=true&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://101.132.39.95:3306/rire?autoReconnect=true&useSSL=false&nullCatalogMeansCurrent=true&useUnicode=true&characterEncoding=UTF-8
 
 logging:
   level:
