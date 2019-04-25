@@ -25,19 +25,39 @@ public class OrderServices {
     @Autowired
     private ProductMapper productMapper;
 
+    /**
+     * 添加订单
+     * @param order
+     * @return
+     */
     public Msg addOrder(Order order) {
         return Msg.response(orderMapper.insertAndGetId(order) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL)
                 .add("orderId", order.getId());
     }
 
+    /**
+     * 根据primary id获取订单
+     * @param id
+     * @return
+     */
     public Order getOrder(int id) {
         return orderMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 删除订单
+     * @param id
+     * @return
+     */
     public Msg deleteOrder(int id) {
         return Msg.response(orderMapper.deleteByPrimaryKey(id) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
+    /**
+     * 获取某一用户的订单
+     * @param userId
+     * @return
+     */
     public List<Order> getMyOrder(int userId) {
         OrderExample example = new OrderExample();
         OrderExample.Criteria criteria = example.createCriteria();
@@ -48,6 +68,11 @@ public class OrderServices {
         return orderMapper.selectByExample(example);
     }
 
+    /**
+     * 获取输入订单中的所有Product
+     * @param orders
+     * @return
+     */
     public List<Product> getProductsByOrders(List<Order> orders) {
         List<Product> products = new ArrayList<>();
         for (Order order : orders) {
@@ -57,6 +82,12 @@ public class OrderServices {
         return products;
     }
 
+    /**
+     * 更新订单状态
+     * @param id
+     * @param status
+     * @return
+     */
     public Msg updateOrderStatus(int id, int status) {
         Order order = getOrder(id);
         order.setStatus(status);

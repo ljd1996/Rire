@@ -53,11 +53,23 @@ public class JsonController {
         return bidListServices.addBid(bidList);
     }
 
+    /**
+     * 设置商品状态
+     * @param id
+     * @param status
+     * @return
+     */
     @GetMapping("/set_status")
     public Msg setStatus(@RequestParam("id") int id, @RequestParam("status") int status) {
         return productServices.updateProductStatus(id, status);
     }
 
+    /**
+     * 设置订单状态
+     * @param id
+     * @param status
+     * @return
+     */
     @GetMapping("/set_order_status")
     public Msg setOrderStatus(@RequestParam("id") int id, @RequestParam("status") int status) {
         Order order = orderServices.getOrder(id);

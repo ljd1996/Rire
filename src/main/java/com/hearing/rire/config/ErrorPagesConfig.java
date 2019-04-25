@@ -13,6 +13,10 @@ import org.springframework.http.HttpStatus;
 @Configuration
 public class ErrorPagesConfig implements ErrorPageRegistrar {
 
+    /**
+     * 错误页面配置
+     * @param registry
+     */
     @Override
     public void registerErrorPages(ErrorPageRegistry registry) {
         ErrorPage e404 = new ErrorPage(HttpStatus.NOT_FOUND, "/error/404");

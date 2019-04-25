@@ -29,6 +29,7 @@ import java.util.Map;
 
 /**
  * Create by hearing on 19-4-8
+ * 路由控制
  */
 @Controller
 public class HttpController {
@@ -47,12 +48,22 @@ public class HttpController {
 
 
     @GetMapping("/")
-    public String home() {
+    public String home(Map<String, Object> map) {
+        getIndex(map);
         return "index";
     }
 
     @GetMapping("/index")
     public String index(Map<String, Object> map) {
+        getIndex(map);
+        return "index";
+    }
+
+    /**
+     * 获取首页内容
+     * @param map
+     */
+    private void getIndex(Map<String, Object> map) {
         List<Product> goodss = productServices.getAllGoods();
         List<Product> demands = productServices.getAllDemand();
 
@@ -61,7 +72,6 @@ public class HttpController {
 
         map.put("goodss", goodss);
         map.put("demands", demands);
-        return "index";
     }
 
     @GetMapping("/login")
@@ -75,6 +85,13 @@ public class HttpController {
         return "myself";
     }
 
+    /**
+     * 根据请求参数获取对应商品或需求数据
+     * @param map
+     * @param type
+     * @param proType
+     * @return
+     */
     @GetMapping("/product")
     public String product(Map<String, Object> map,
                           @RequestParam("type") Integer type, @RequestParam("proType") String proType) {
@@ -181,6 +198,12 @@ public class HttpController {
         return "release";
     }
 
+    /**
+     * 发布商品
+     * @param response
+     * @param product
+     * @param file
+     */
     @PostMapping("/releaseAction")
     public void uploadArticle(HttpServletResponse response, Product product,
                               @RequestParam(value = "file", required = false) MultipartFile file) {
@@ -201,6 +224,12 @@ public class HttpController {
         }
     }
 
+    /**
+     * 修改商品信息
+     * @param response
+     * @param product
+     * @param file
+     */
     @PostMapping("/updateProduct")
     public void updateProduct(HttpServletResponse response, Product product,
                               @RequestParam(value = "file", required = false) MultipartFile file) {
@@ -222,6 +251,13 @@ public class HttpController {
         }
     }
 
+    /**
+     * 上传合同，生成订单
+     * @param response
+     * @param map
+     * @param productId
+     * @param contract
+     */
     @PostMapping("/upload_contract")
     public void uploadContract(HttpServletResponse response, Map<String, String> map,
                                @RequestParam("productId") Integer productId,

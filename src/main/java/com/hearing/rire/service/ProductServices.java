@@ -30,14 +30,28 @@ public class ProductServices {
     private BidListServices bidListServices;
 
 
+    /**
+     * 根据primary id获取Product
+     * @param id
+     * @return
+     */
     public Product getProduct(int id) {
         return productMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 添加Product
+     * @param product
+     * @return
+     */
     public Msg addProduct(Product product) {
         return Msg.response(productMapper.insertAndGetId(product) > 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL).add("productId", product.getId());
     }
 
+    /**
+     * 获取所有商品
+     * @return
+     */
     public List<Product> getAllGoods() {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
@@ -45,6 +59,11 @@ public class ProductServices {
         return productMapper.selectByExample(example);
     }
 
+    /**
+     * 获取指定类型的商品
+     * @param proType
+     * @return
+     */
     public List<Product> getGoodsByType(String proType) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
@@ -53,6 +72,10 @@ public class ProductServices {
         return productMapper.selectByExample(example);
     }
 
+    /**
+     * 获取所有需求
+     * @return
+     */
     public List<Product> getAllDemand() {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
@@ -60,6 +83,11 @@ public class ProductServices {
         return productMapper.selectByExample(example);
     }
 
+    /**
+     * 获取指定类型的需求
+     * @param proType
+     * @return
+     */
     public List<Product> getDemandByType(String proType) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
@@ -68,6 +96,12 @@ public class ProductServices {
         return productMapper.selectByExample(example);
     }
 
+    /**
+     * 获取当前登录用户的需求
+     * @param userId
+     * @param online
+     * @return
+     */
     public List<Product> getMyDemand(int userId, boolean online) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
@@ -78,6 +112,12 @@ public class ProductServices {
         return productMapper.selectByExample(example);
     }
 
+    /**
+     * 获取当前登录用户的商品
+     * @param userId
+     * @param online
+     * @return
+     */
     public List<Product> getMyGoods(int userId, boolean online) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
@@ -88,6 +128,12 @@ public class ProductServices {
         return productMapper.selectByExample(example);
     }
 
+    /**
+     * 更新Product status
+     * @param id
+     * @param status
+     * @return
+     */
     public Msg updateProductStatus(int id, int status) {
         Product product = getProduct(id);
         product.setStatus(status);
@@ -98,6 +144,11 @@ public class ProductServices {
                 Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
+    /**
+     * 修改Product信息
+     * @param product
+     * @return
+     */
     public Msg updateProduct(Product product) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
@@ -106,10 +157,20 @@ public class ProductServices {
                 Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
+    /**
+     * 删除Product
+     * @param id
+     * @return
+     */
     public Msg deleteProduct(int id) {
         return Msg.response(productMapper.deleteByPrimaryKey(id) >= 1 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
+    /**
+     * 获取Product详情
+     * @param map
+     * @param productId
+     */
     public void getProductDetail(Map<String, Object> map, Integer productId) {
         Product product = getProduct(productId);
         map.put("product", product);

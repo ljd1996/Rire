@@ -20,11 +20,20 @@ public class UserServices {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 获取当前登录用户
+     * @return
+     */
     public User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return principal instanceof UserDetails ? (User) principal : null;
     }
 
+    /**
+     * 根据用户名获取用户
+     * @param name
+     * @return
+     */
     public User getUserByName(String name) {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
@@ -33,10 +42,18 @@ public class UserServices {
         return users.size() > 0 ? users.get(0) : null;
     }
 
+    /**
+     * 根据primary id获取用户
+     * @param id
+     * @return
+     */
     public User getUserById(int id) {
         return userMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 更新用户信息
+     */
     public Msg update(User user) {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
@@ -44,10 +61,22 @@ public class UserServices {
         return Msg.response(userMapper.updateByExampleSelective(user, userExample) >= 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
+    /**
+     * 注册
+     * @param user
+     * @return
+     * @throws Exception
+     */
     public Msg register(User user) throws Exception {
         return Msg.response(userMapper.insert(user) > 0 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
+    /**
+     * 登录(没用到)
+     * @param name
+     * @param password
+     * @return
+     */
     public Msg login(String name, String password) {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();

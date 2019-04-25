@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Create by hearing on 19-4-10
+ * SpringSecurity用户登录相关
  */
 @Service
 public class UserService implements UserDetailsService {

@@ -24,6 +24,11 @@ public class BidListServices {
     private ProductServices productServices;
 
 
+    /**
+     * 添加bidlist
+     * @param bidList
+     * @return
+     */
     public Msg addBid(BidList bidList) {
         int mainId = bidList.getMainid();
         int followId = bidList.getFollowid();
@@ -34,6 +39,11 @@ public class BidListServices {
                 ? Msg.CODE_SUCCESS : Msg.CODE_FAIL);
     }
 
+    /**
+     * 通过mainId获取bidlist
+     * @param mainId
+     * @return
+     */
     public List<BidList> getBidListByMainId(int mainId) {
         BidListExample example = new BidListExample();
         BidListExample.Criteria criteria = example.createCriteria();
@@ -41,6 +51,11 @@ public class BidListServices {
         return bidListMapper.selectByExample(example);
     }
 
+    /**
+     * 通过mainId获取产品list
+     * @param mainId
+     * @return
+     */
     public List<Product> getBidProductByMainId(int mainId) {
         BidListExample example = new BidListExample();
         BidListExample.Criteria criteria = example.createCriteria();
