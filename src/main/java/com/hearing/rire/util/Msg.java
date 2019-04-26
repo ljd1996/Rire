@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * Create by hearing on 19-4-10
+ * 消息类
  */
 public class Msg implements Serializable {
 

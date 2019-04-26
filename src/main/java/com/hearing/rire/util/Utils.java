@@ -13,6 +13,11 @@ import java.util.List;
  * Create by hearing on 19-4-13
  */
 public class Utils {
+
+    /**
+     * 获取图片和文件的路径
+     * @return
+     */
     public static String getResPath() {
 //        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/file/";
         String path = "E:/lilan/file/";
@@ -24,6 +29,12 @@ public class Utils {
         return path;
     }
 
+    /**
+     * 将用户上传的文件放到服务器中（此处为本地）
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public static String getImgPath(MultipartFile file) throws IOException {
         if (file == null || file.getOriginalFilename().isEmpty()) {
             return null;
@@ -45,6 +56,11 @@ public class Utils {
         return filepath + fileName;
     }
 
+    /**
+     * 删除List后面的元素，只留下count个元素
+     * @param list
+     * @param count
+     */
     public static void rmBack(List<?> list, int count) {
         if (list.size() > count) {
             for (int i = list.size() - 1; i >= count; i--) {

@@ -32,6 +32,14 @@ public class RireApplication extends SpringBootServletInitializer {
         return builder.sources(this.getClass());
     }
 
+    /**
+     * MyBatis逆向代码
+     * @throws IOException
+     * @throws XMLParserException
+     * @throws InvalidConfigurationException
+     * @throws SQLException
+     * @throws InterruptedException
+     */
     private static void genBean() throws IOException, XMLParserException,
             InvalidConfigurationException, SQLException, InterruptedException {
         List<String> warnings = new ArrayList<String>();
