@@ -61,6 +61,7 @@ public class HttpController {
 
     /**
      * 获取首页内容
+     *
      * @param map
      */
     private void getIndex(Map<String, Object> map) {
@@ -87,6 +88,7 @@ public class HttpController {
 
     /**
      * 根据请求参数获取对应商品或需求数据
+     *
      * @param map
      * @param type
      * @param proType
@@ -114,6 +116,27 @@ public class HttpController {
         }
         // 用来标识处于哪一页面
         map.put("type", proType + type);
+        return "product";
+    }
+
+    /**
+     * 搜索功能
+     *
+     * @param map
+     * @param type
+     * @param searchType
+     * @param name
+     * @return
+     */
+    @GetMapping("/search")
+    public String search(Map<String, Object> map,
+                         @RequestParam("type") Integer type,
+                         @RequestParam("searchType") Integer searchType,
+                         @RequestParam("name") String name) {
+        map.put("product", productServices.search(type, searchType, name));
+        map.put("type", type == Constant.PRO_TYPE_GOODS ? "goods_search" : "demand_search");
+        map.put("searchType", searchType==Constant.SEARCH_TYPE_PRODUCT_NAME?"产品":"用户");
+        map.put("name", name);
         return "product";
     }
 
@@ -200,6 +223,7 @@ public class HttpController {
 
     /**
      * 发布商品
+     *
      * @param response
      * @param product
      * @param file
@@ -226,6 +250,7 @@ public class HttpController {
 
     /**
      * 修改商品信息
+     *
      * @param response
      * @param product
      * @param file
@@ -253,6 +278,7 @@ public class HttpController {
 
     /**
      * 上传合同，生成订单
+     *
      * @param response
      * @param map
      * @param productId

@@ -20,6 +20,9 @@ public class Constant {
     public static final String TYPE_F = "TypeF";                    // 类型F
     public static final String TYPE_G = "TypeG";                    // 类型G
 
+    public static final int SEARCH_TYPE_PRODUCT_NAME = 0;
+    public static final int SEARCH_TYPE_USER_NAME = 1;
+
     /**
      * 首页商品的需求的展示数目
      */

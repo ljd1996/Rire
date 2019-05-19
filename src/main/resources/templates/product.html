@@ -78,6 +78,47 @@
 
 <body>
 <header>
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="left floatleft">
+                        <ul>
+                            <li>
+                                <i class="fa fa-phone"></i>
+                                18229948115
+                            </li>
+                            <li>
+                                <i class="fa fa-envelope-o"></i>
+                                1084155633@qq.com
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="right floatright">
+                        <ul>
+                            <li>
+                                <form action="/search">
+                                    <button type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <input type="search" name="name" placeholder="搜索"/>
+                                    <select name="type" style="background-color: #0b0b0b">
+                                        <option value="0">商品</option>
+                                        <option value="1">需求</option>
+                                    </select>
+                                    <select name="searchType" style="background-color: #0b0b0b">
+                                        <option value="0">产品名</option>
+                                        <option value="1">用户名</option>
+                                    </select>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="sticky-menu" class="header-bottom">
         <div class="container">
             <div class="row">
@@ -236,8 +277,8 @@
 </div>
 
 <div class="col-xs-12">
-    <h2 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('goods')}">全部商品</h2>
-    <h2 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('demand')}">全部需求</h2>
+    <h2 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('goods')&&!type.contains('search')}">全部商品</h2>
+    <h2 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('demand')&&!type.contains('search')}">全部需求</h2>
 
     <h2 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeA0')}">商品分类：TypeA</h2>
     <h2 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('TypeB0')}">商品分类：TypeB</h2>
@@ -257,6 +298,11 @@
 
     <h2 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('mygoods')}">我的商品</h2>
     <h2 style="color: #5bc0de;text-align: center;margin-top: 12px" th:if="${type.startsWith('mydemand')}">我的需求</h2>
+
+    <h2 style="color: #5bc0de;text-align: center;margin-top: 12px"
+        th:if="${type.equals('goods_search')}" th:text="${'[搜索商品] '+searchType+'关键字:'+name}"></h2>
+    <h2 style="color: #5bc0de;text-align: center;margin-top: 12px"
+        th:if="${type.equals('demand_search')}" th:text="${'[搜索需求] '+searchType+'关键字:'+name}"></h2>
 </div>
 
 <section class="product-content section-padding">

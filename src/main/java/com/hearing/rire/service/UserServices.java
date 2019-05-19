@@ -22,6 +22,7 @@ public class UserServices {
 
     /**
      * 获取当前登录用户
+     *
      * @return
      */
     public User getCurrentUser() {
@@ -31,6 +32,7 @@ public class UserServices {
 
     /**
      * 根据用户名获取用户
+     *
      * @param name
      * @return
      */
@@ -44,11 +46,25 @@ public class UserServices {
 
     /**
      * 根据primary id获取用户
+     *
      * @param id
      * @return
      */
     public User getUserById(int id) {
         return userMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 根据name模糊查找用户
+     *
+     * @param name
+     * @return
+     */
+    public List<User> searchUser(String name) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria userCriteria = userExample.createCriteria();
+        userCriteria.andNameLike("%" + name + "%");
+        return userMapper.selectByExample(userExample);
     }
 
     /**
@@ -63,6 +79,7 @@ public class UserServices {
 
     /**
      * 注册
+     *
      * @param user
      * @return
      * @throws Exception
@@ -73,6 +90,7 @@ public class UserServices {
 
     /**
      * 登录(没用到)
+     *
      * @param name
      * @param password
      * @return

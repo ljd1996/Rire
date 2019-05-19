@@ -3,6 +3,7 @@ package com.hearing.rire.service;
 import com.hearing.rire.bean.Product;
 import com.hearing.rire.bean.ProductExample;
 import com.hearing.rire.bean.User;
+import com.hearing.rire.bean.UserExample;
 import com.hearing.rire.dao.ProductMapper;
 import com.hearing.rire.util.Constant;
 import com.hearing.rire.util.Msg;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,7 @@ public class ProductServices {
 
     /**
      * 根据primary id获取Product
+     *
      * @param id
      * @return
      */
@@ -41,6 +44,7 @@ public class ProductServices {
 
     /**
      * 添加Product
+     *
      * @param product
      * @return
      */
@@ -50,6 +54,7 @@ public class ProductServices {
 
     /**
      * 获取所有商品
+     *
      * @return
      */
     public List<Product> getAllGoods() {
@@ -61,6 +66,7 @@ public class ProductServices {
 
     /**
      * 获取指定类型的商品
+     *
      * @param proType
      * @return
      */
@@ -74,6 +80,7 @@ public class ProductServices {
 
     /**
      * 获取所有需求
+     *
      * @return
      */
     public List<Product> getAllDemand() {
@@ -85,6 +92,7 @@ public class ProductServices {
 
     /**
      * 获取指定类型的需求
+     *
      * @param proType
      * @return
      */
@@ -98,6 +106,7 @@ public class ProductServices {
 
     /**
      * 获取当前登录用户的需求
+     *
      * @param userId
      * @param online
      * @return
@@ -114,6 +123,7 @@ public class ProductServices {
 
     /**
      * 获取当前登录用户的商品
+     *
      * @param userId
      * @param online
      * @return
@@ -128,8 +138,29 @@ public class ProductServices {
         return productMapper.selectByExample(example);
     }
 
+    public List<Product> search(int type, int searchType, String name) {
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+
+        if (searchType == Constant.SEARCH_TYPE_PRODUCT_NAME) {
+            criteria.andTypeEqualTo(type).andNameLike("%" + name + "%");
+            return productMapper.selectByExample(example);
+        } else if (searchType == Constant.SEARCH_TYPE_USER_NAME) {
+            List<User> users = userServices.searchUser(name);
+            List<Product> products = new ArrayList<>();
+            for (User user : users) {
+                criteria.andTypeEqualTo(type).andUserIdEqualTo(user.getId());
+                products.addAll(productMapper.selectByExample(example));
+            }
+            return products;
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
     /**
      * 更新Product status
+     *
      * @param id
      * @param status
      * @return
@@ -146,6 +177,7 @@ public class ProductServices {
 
     /**
      * 修改Product信息
+     *
      * @param product
      * @return
      */
@@ -159,6 +191,7 @@ public class ProductServices {
 
     /**
      * 删除Product
+     *
      * @param id
      * @return
      */
@@ -168,6 +201,7 @@ public class ProductServices {
 
     /**
      * 获取Product详情
+     *
      * @param map
      * @param productId
      */
